@@ -1,0 +1,79 @@
+
+:global {
+  .content-show-welcome {
+    margin-top: 150px;
+    padding: 5px;
+    font-size: 50px;
+    font-family: 华文行楷, serif;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 0 5px #00F;
+    //background-color: green;
+  }
+
+  .content-func-welcome {
+    display: inline-block;
+    margin-top: 120px;
+    width: 100%;
+    height: 80px;
+    //background: red;
+
+    div {
+      margin-left: 17.5px;
+      margin-right: 17.5px;
+      height: 48px;
+      //background: purple;
+
+      i {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        text-align: center;
+        background: #1A3A44;
+      }
+
+      span {
+        display: inline-block;
+        position: relative;
+        left: -18px;
+        width: 70px;
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
+    .control-goods {
+
+      i {
+        background: url("../static/goods-logo.svg") no-repeat;
+      }
+    }
+    .corporation-approach {
+      i {
+        background: url("../static/cooperation-logo.svg") no-repeat;
+      }
+    }
+    .absolute-safety {
+
+      i {
+        background: url("../static/safe-logo.svg") no-repeat;
+      }
+    }
+    .cloud-services {
+
+      i {
+        background: url("../static/cloud-logo.svg") no-repeat;
+      }
+    }
+
+    .suspension-up {
+      transition: 0.5s;
+      transform: translate(0, -10px);
+    }
+
+    .suspension-down {
+      transition: 0.5s;
+      transform: translate(0);
+    }
+  }
+
+}

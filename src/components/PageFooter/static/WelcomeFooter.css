@@ -1,0 +1,47 @@
+:global {
+  /* 欢迎页页脚区域开始 */
+}
+:global .content-footer-welcome {
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 75px;
+  text-align: center;
+  line-height: 50px;
+  color: #FFF;
+  /* 页脚左右箭头部分的阴影特效 */
+  /* 页脚左箭头和左箭头覆盖面样式 */
+  /* 页脚右键头样式 */
+  /* 版权信息展示区域 */
+}
+:global .content-footer-welcome .footer-left-arrow,
+:global .content-footer-welcome .footer-right-arrow {
+  box-shadow: inset 0 0 0 1px rgba(31, 31, 31, 0.66), 0 0 10px rgba(0, 0, 0, 0.75), 0 0 10px rgba(0, 0, 0, 0.75);
+}
+:global .content-footer-welcome .footer-left-arrow,
+:global .content-footer-welcome .footer-left-cover {
+  position: absolute;
+  top: 30px;
+  left: -5px;
+  width: 70%;
+  height: 80px;
+  background-color: #212427;
+  transform: rotate(3deg);
+}
+:global .content-footer-welcome .footer-right-arrow {
+  position: absolute;
+  top: 30px;
+  right: -5px;
+  width: 70%;
+  height: 80px;
+  background-color: #212427;
+  transform: rotate(-3deg);
+}
+:global .content-footer-welcome .copyright {
+  position: relative;
+  margin-top: 33px;
+  color: #E6E6E6;
+}
+/* 欢迎页页脚区域结束 */
+/*# sourceMappingURL=WelcomeFooter.css.map */

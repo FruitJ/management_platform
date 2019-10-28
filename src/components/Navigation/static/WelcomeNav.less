@@ -1,0 +1,73 @@
+// WelcomeNav 组件的样式
+:global {
+  .content-nav-welcome {
+    width: 100%;
+    height: 50px;
+    box-shadow:
+            inset 0 0 0 1px rgba(31,31,31,.66),
+            0 0 10px rgba(0,0,0,.75),
+            0 0 10px rgba(0,0,0,.75);
+    //background: url("./nav-bg.png");
+    background-color: #212427;
+    text-align: center;
+    line-height: 50px;
+    color: #FFF;
+
+    .nav-app-content {
+
+      margin-top: -3px;
+
+      .nav-app-title {
+        display: inline-block;
+        position: relative;
+        top: 2.5px;
+        margin-left: 10px;
+        color: #E7E7E7;
+      }
+    }
+
+    .nav-func-module {
+      .contact {
+        border: none;
+        border-left: 1px solid #0E1011;
+        cursor: pointer;
+      }
+      .join {
+        border: none;
+        border-left: 1px solid #0E1011;
+        border-right: 1px solid #0E1011;
+        cursor: pointer;
+      }
+    }
+
+    .nav-account-module {
+      .nav-btn-register {
+        //background-color: red;
+
+        div {
+          margin: 5px auto;
+          margin-top: 7.5px;
+          width: 82px;
+          height: 35px;
+          border-radius: 4px;
+          line-height: 35px;
+          color: #053919;
+          background-color: #98C530;
+        }
+      }
+
+      .nav-btn-login {
+        div {
+          margin: 5px auto;
+          margin-top: 7.5px;
+          width: 82px;
+          height: 35px;
+          border-radius: 4px;
+          line-height: 35px;
+          color: #DDDDDD;
+          background-color: #1A3A44;
+        }
+      }
+    }
+  }
+}
