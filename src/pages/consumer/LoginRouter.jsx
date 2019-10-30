@@ -20,9 +20,7 @@ class LoginRouter extends Component {
   render() {
     return (
       <div className="container-login">
-        <div>
-          <Login />
-        </div>
+        <Login />
       </div>
     );
   }

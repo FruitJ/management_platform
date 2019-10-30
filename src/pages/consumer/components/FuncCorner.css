@@ -2,14 +2,69 @@
 /* 右上 */
 :global .func-corner {
   position: absolute;
+  z-index: 1000;
   width: 250px;
   height: 250px;
-  background-color: pink;
+  box-shadow: rgba(31, 31, 31, 0.66) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.75) 0px 0px 10px, rgba(0, 0, 0, 0.75) 0px 0px 10px;
+  transition-duration: 0.5s;
+  background-color: #202326;
 }
 :global .func-corner p {
-  position: relative;
+  position: absolute;
   left: 110px;
   top: 195px;
+  width: 42px;
+  height: 42px;
   text-align: center;
+}
+:global .f-corner-leftTop {
+  top: 0;
+  transform: rotate(-45deg) translate(0px, -205px);
+}
+:global .f-corner-leftTop p {
+  background: url('../static/logo-back.svg') no-repeat;
+  background-size: cover;
+}
+:global .f-corner-leftTop:hover {
+  transition-duration: 0.5s;
+  transform: rotate(-45deg) translate(0px, -180px);
+}
+:global .f-corner-leftBottom {
+  bottom: 0;
+  transform: rotate(45deg) translate(0px, 205px);
+}
+:global .f-corner-leftBottom p {
+  background: url('../static/logo-skin.svg') no-repeat;
+  background-size: cover;
+}
+:global .f-corner-leftBottom:hover {
+  transition-duration: 0.5s;
+  transform: rotate(45deg) translate(0px, 180px);
+}
+:global .f-corner-rightTop {
+  top: 0;
+  right: 0;
+  transform: rotate(-45deg) translate(205px, 0px);
+}
+:global .f-corner-rightTop p {
+  background: url('../static/logo-forgetPwd.svg') no-repeat;
+  background-size: cover;
+}
+:global .f-corner-rightTop:hover {
+  transition-duration: 0.5s;
+  transform: rotate(-45deg) translate(180px, 0px);
+}
+:global .f-corner-rightBottom {
+  bottom: 0;
+  right: 0;
+  transform: rotate(45deg) translate(205px, 0px);
+}
+:global .f-corner-rightBottom p {
+  background: url('../static/logo-register.svg') no-repeat;
+  background-size: cover;
+}
+:global .f-corner-rightBottom:hover {
+  transition-duration: 0.5s;
+  transform: rotate(45deg) translate(180px, 0px);
 }
 /*# sourceMappingURL=FuncCorner.css.map */
