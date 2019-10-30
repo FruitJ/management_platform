@@ -25,7 +25,7 @@ const menuDataRender = menuList =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright="2019 蚂蚁金服体验技术部出品"
+    copyright="Copyright © 2019 河北宽广控股集团 - 信息管理中心"
     links={[
       {
         key: 'Ant Design Pro',

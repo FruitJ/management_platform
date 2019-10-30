@@ -1,0 +1,15 @@
+/* FuncCorner 【Login 功能角组件】的样式 */
+/* 右上 */
+:global .func-corner {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background-color: pink;
+}
+:global .func-corner p {
+  position: relative;
+  left: 110px;
+  top: 195px;
+  text-align: center;
+}
+/*# sourceMappingURL=FuncCorner.css.map */

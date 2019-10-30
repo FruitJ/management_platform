@@ -95,8 +95,17 @@ export default {
       ],
     },
     {
+      path: '/consumer', // 用户模块
+      routes: [
+        {
+          path: '/consumer/login', // 登录模块
+          component: './consumer/LoginRouter',
+        },
+      ],
+    },
+    {
       path: '/',
-      component: '../pages/welcome/NewWelcome', // 欢迎页面
+      component: '../pages/welcome/NewWelcome', // 欢迎页模块
       routes: [
         {
           path: '/',

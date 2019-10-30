@@ -1,10 +1,12 @@
 // 导入官方包
-import React, {Component, useEffect} from 'react';
-import { connect } from "dva";
+import React, { Component, useEffect } from 'react';
+import { connect } from 'dva';
 
 // 导入自定义包
-import WelcomeRealize from "@/pages/welcome/components/WelcomeRealize";
+import WelcomeRealize from '@/pages/welcome/components/WelcomeRealize';
 import './static/NewWelcome.less';
+import TestWelcomeRealize from '@/pages/welcome/components/TestWelcomeRealize';
+import { push } from 'umi/src/router';
 
 /**
  * @author 刘杰
@@ -12,33 +14,49 @@ import './static/NewWelcome.less';
  * @Description: 欢迎页组件 (路由组件、有状态组件)
  */
 
-const NewWelcome = ({ dispatch, welcome}) => {
-  
+const NewWelcome = ({ dispatch, welcome }) => {
   // 定义改变欢迎页面的悬浮 logo 标的动态样式
   function handleChangeLogoStyle(action, suffix) {
-    if(action === 'up') {
+    if (action === 'up') {
       dispatch({
-        type: "welcome/changeStyleUp",
-        payload: suffix
+        type: 'welcome/changeStyleUp',
+        payload: suffix,
       });
-    }else if(action === 'down') {
+    } else if (action === 'down') {
       dispatch({
-        type: "welcome/changeStyleDown",
-        payload: suffix
+        type: 'welcome/changeStyleDown',
+        payload: suffix,
       });
     }
   }
-  
-  
-  
+
+  // 注册
+  function handleRegister() {
+    /*dispatch({
+      type: "welcome/toRegister"
+    });*/
+  }
+
+  // 登录
+  function handleLogin() {
+    dispatch({
+      type: 'welcome/toLogin',
+    });
+  }
+
   return (
-      <div className = "welcome">
-        <WelcomeRealize onChangeLogoStyle = { handleChangeLogoStyle }
-                        welcome = { welcome }
-        />
-      </div>
+    <div className="welcome">
+      <WelcomeRealize
+        onChangeLogoStyle={handleChangeLogoStyle}
+        welcome={welcome}
+        onRegister={handleRegister}
+        onLogin={handleLogin}
+      />
+      {/*<TestWelcomeRealize />*/}
+    </div>
   );
 };
-export default connect(({welcome}) => ({
+
+export default connect(({ welcome }) => ({
   welcome,
 }))(NewWelcome);
