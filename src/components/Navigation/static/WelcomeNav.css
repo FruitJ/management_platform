@@ -1,3 +1,6 @@
+:global {
+  /* 欢迎页面导航栏区域样式 */
+}
 :global .content-nav-welcome {
   width: 100%;
   height: 3.125rem;
@@ -6,6 +9,8 @@
   text-align: center;
   line-height: 3.125rem;
   color: #fff;
+  /* 欢迎页导航栏的功能模块区域样式 */
+  /* 注册与登录区域按钮的样式 */
 }
 :global .content-nav-welcome .nav-app-content {
   margin-top: -3px;

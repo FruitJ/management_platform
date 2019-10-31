@@ -5,7 +5,11 @@ import { connect } from 'dva';
 // 导入自定义包
 import WelcomeRealize from '@/pages/welcome/components/WelcomeRealize';
 import './static/NewWelcome.less';
-import TestWelcomeRealize from '@/pages/welcome/components/TestWelcomeRealize';
+import {
+  WELCOME$CHANGE_STYLE_UP,
+  WELCOME$CHANGE_STYLE_DOWN,
+  WELCOME$TO_LOGIN,
+} from './static/config';
 import { push } from 'umi/src/router';
 
 /**
@@ -19,12 +23,12 @@ const NewWelcome = ({ dispatch, welcome }) => {
   function handleChangeLogoStyle(action, suffix) {
     if (action === 'up') {
       dispatch({
-        type: 'welcome/changeStyleUp',
+        type: WELCOME$CHANGE_STYLE_UP,
         payload: suffix,
       });
     } else if (action === 'down') {
       dispatch({
-        type: 'welcome/changeStyleDown',
+        type: WELCOME$CHANGE_STYLE_DOWN,
         payload: suffix,
       });
     }
@@ -40,7 +44,7 @@ const NewWelcome = ({ dispatch, welcome }) => {
   // 登录
   function handleLogin() {
     dispatch({
-      type: 'welcome/toLogin',
+      type: WELCOME$TO_LOGIN,
     });
   }
 
@@ -52,7 +56,6 @@ const NewWelcome = ({ dispatch, welcome }) => {
         onRegister={handleRegister}
         onLogin={handleLogin}
       />
-      {/*<TestWelcomeRealize />*/}
     </div>
   );
 };

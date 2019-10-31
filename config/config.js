@@ -101,6 +101,14 @@ export default {
           path: '/consumer/login', // 登录模块
           component: './consumer/LoginRouter',
         },
+        {
+          path: '/consumer/forgetPassword',
+          component: './consumer/ForgetPasswordRouter',
+        },
+        {
+          path: '/consumer/register',
+          component: './consumer/RegisterRouter',
+        },
       ],
     },
     {

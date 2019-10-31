@@ -9,7 +9,13 @@ import './FuncCorner.less';
  * @date 2019-10-29
  * @Description: Login 登录界面的【功能角】组件
  */
-const FuncCorner = ({ config }) => {
+const FuncCorner = ({
+  config,
+  handleBack,
+  handleSwitchSkin,
+  handleForgetPassword,
+  handleRegister,
+}) => {
   return (
     <div
       style={{
@@ -18,7 +24,15 @@ const FuncCorner = ({ config }) => {
     >
       {/* 根据传入的值判断生成的功能角的配置信息 */}
       {config === 'leftTop' ? (
-        <div className="func-corner f-corner-leftTop">
+        <div
+          className="func-corner f-corner-leftTop"
+          onClick={() => {
+            handleBack();
+          }}
+          onTouchStart={() => {
+            handleBack();
+          }}
+        >
           <p
             style={{
               right: '110px',
@@ -29,7 +43,13 @@ const FuncCorner = ({ config }) => {
           </p>
         </div>
       ) : config === 'leftBottom' ? (
-        <div className="func-corner f-corner-leftBottom">
+        <div
+          className="func-corner f-corner-leftBottom"
+          onClick={() => {
+            handleSwitchSkin();
+          }}
+          onTouchStart={handleSwitchSkin()}
+        >
           <p
             style={{
               right: '110px',
@@ -40,7 +60,15 @@ const FuncCorner = ({ config }) => {
           </p>
         </div>
       ) : config === 'rightTop' ? (
-        <div className="func-corner f-corner-rightTop">
+        <div
+          className="func-corner f-corner-rightTop"
+          onClick={() => {
+            handleForgetPassword();
+          }}
+          onTouchStart={() => {
+            handleForgetPassword();
+          }}
+        >
           <p
             style={{
               zIndex: '2000',
@@ -53,7 +81,15 @@ const FuncCorner = ({ config }) => {
           </p>
         </div>
       ) : (
-        <div className="func-corner f-corner-rightBottom">
+        <div
+          className="func-corner f-corner-rightBottom"
+          onClick={() => {
+            handleRegister();
+          }}
+          onTouchStart={() => {
+            handleRegister();
+          }}
+        >
           <p
             style={{
               zIndex: '2000',

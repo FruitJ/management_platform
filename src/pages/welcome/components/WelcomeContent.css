@@ -1,3 +1,7 @@
+:global {
+  /* 欢迎页面宣传标语样式 */
+  /* 内容区域功能模块样式 */
+}
 :global .content-show-welcome {
   margin-top: 150px;
   padding: 5px;
@@ -12,6 +16,8 @@
   margin-top: 120px;
   width: 100%;
   height: 80px;
+  /* 向上悬浮的过度样式 */
+  /* 向下悬浮的过度样式 */
 }
 :global .content-func-welcome div {
   margin-left: 17.5px;
