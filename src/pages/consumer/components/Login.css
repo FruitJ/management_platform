@@ -51,6 +51,17 @@
   color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 0 1px rgba(0, 0, 0, 0.7);
 }
+:global .content-login .copyright-login {
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  bottom: 0;
+  font-size: 14px;
+  text-align: center;
+  line-height: 50px;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 0 0.5px gray;
+}
 :global .ant-input {
   background: rgba(255, 255, 255, 0.7);
 }

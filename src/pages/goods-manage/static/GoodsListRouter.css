@@ -1,0 +1,4 @@
+:global(.column-goodsClasses, .column-goodsBrand, .column-goodsPrice) {
+  padding-left: 0 !important;
+}
+/*# sourceMappingURL=GoodsListRouter.css.map */

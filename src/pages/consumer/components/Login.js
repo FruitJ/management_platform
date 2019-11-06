@@ -1,6 +1,6 @@
 // 导入官方包
 import React, { Component } from 'react';
-import { Row, Col, Form, Input, Icon, Button, Checkbox, Tooltip, Modal } from 'antd';
+import { Row, Col, Form, Input, Icon, Button, Checkbox, Tooltip, Modal, message } from 'antd';
 
 // 导入自定义包
 import FuncCorner from './FuncCorner';
@@ -24,6 +24,25 @@ class LoginComponent extends Component {
     this.props.form.validateFields();
   }
 
+  // 登录的回调函数
+  handleSubmit = ev => {
+    ev.preventDefault(); // 阻止表单默认提交的行为
+
+    const { consumerLogin } = this.props;
+
+    this.props.form.validateFields((err, values) => {
+      values.isAutoLogin = consumerLogin.isAutoLogin;
+
+      if (!err) {
+        if (consumerLogin.isAgreeKGAgreement) {
+          this.props.handleSubmit(values);
+        } else {
+          message.warning('请同意宽广集团关于三方商户管理平台的若干规定!');
+        }
+      }
+    });
+  };
+
   render() {
     // 获取 antd 中 form 中的属性用来校验表单和收集错误
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
@@ -39,13 +58,14 @@ class LoginComponent extends Component {
       handleSwitchSkin, // 切换皮肤 - 功能角
       handleForgetPassword, // 忘记密码 - 功能角
       handleRegister, // 注册 - 功能角
+      handleAutoLogin, // 选择是否同意自动登录
     } = this.props;
 
     // 这里的 isFieldTouched 与 getFieldError 分别代表 "这个表单被收集过值吗"、"收集指定表单域的异常"
     const userNameError = isFieldTouched('userName') && getFieldError('userName');
     const userPwdError = isFieldTouched('userPwd') && getFieldError('userPwd');
     const userPhoneError = isFieldTouched('userPhone') && getFieldError('userPhone');
-    const userCaptchaError = isFieldTouched('captcha') && getFieldError('captcha');
+    const userCaptchaError = isFieldTouched('userCaptcha') && getFieldError('userCaptcha');
 
     return (
       /* 登录组件 - 主体部分 */
@@ -89,7 +109,7 @@ class LoginComponent extends Component {
                   {/* 表单标题 */}
                   <p className="form-title-login">登录 • 三方商户管理平台</p>
 
-                  <Form layout="inline">
+                  <Form layout="inline" onSubmit={this.handleSubmit}>
                     {/* 根据用户的操作生成对应的登录策略 */
                     !consumerLogin.isSwitchLoginWay ? (
                       /* 用户名和密码的登录方式 */
@@ -100,11 +120,19 @@ class LoginComponent extends Component {
                           help={userNameError || ''}
                         >
                           {getFieldDecorator('userName', {
-                            rules: [{ required: true, message: 'Please input your userName' }],
+                            rules: [
+                              {
+                                required: true,
+                                message: '请输入 2 ~ 6 个中文字符',
+                                pattern: /^[\u4e00-\u9fa5]{2,8}$/,
+                              },
+                            ],
                           })(
                             <Input
                               prefix={<Icon type="user" style={{ color: 'rgba(0, 0, 0, .25)' }} />}
                               placeholder="用户名"
+                              maxLength={8}
+                              required
                             />,
                           )}
                         </Form.Item>
@@ -119,6 +147,7 @@ class LoginComponent extends Component {
                               {
                                 required: true,
                                 message: 'Please input your password',
+                                pattern: /^[0-9a-zA-Z_]{6}$/,
                               },
                             ],
                           })(
@@ -133,6 +162,8 @@ class LoginComponent extends Component {
                                   }}
                                 />
                               }
+                              maxLength={6}
+                              required
                             />,
                           )}
                         </Form.Item>
@@ -156,11 +187,21 @@ class LoginComponent extends Component {
                           help={userPhoneError || ''}
                         >
                           {getFieldDecorator('userPhone', {
-                            rules: [{ required: true, message: 'Please input your userPhone' }],
+                            rules: [
+                              {
+                                required: true,
+                                message: '请输入 11 位数字手机号',
+                                validator(rule, value, callback) {
+                                  return /^1[3456789]\d{9}$/.test(value);
+                                },
+                              },
+                            ],
                           })(
                             <Input
                               prefix={<Icon type="phone" style={{ color: 'rgba(0, 0, 0, .25)' }} />}
                               placeholder="手机号"
+                              maxLength={11}
+                              required
                             />,
                           )}
                         </Form.Item>
@@ -170,15 +211,16 @@ class LoginComponent extends Component {
                           validateStatus={userCaptchaError ? 'error' : ''}
                           help={userCaptchaError || ''}
                         >
-                          {getFieldDecorator('captcha', {
+                          {getFieldDecorator('userCaptcha', {
                             rules: [
                               {
-                                required: true,
-                                message: 'Please input your captcha',
+                                required: false,
+                                message: '请输入 4 位数字验证码',
+                                pattern: /^\d{4}$/,
                               },
                             ],
                           })(
-                            <>
+                            <div>
                               <Input
                                 placeholder="验证码"
                                 style={{
@@ -192,6 +234,8 @@ class LoginComponent extends Component {
                                     }}
                                   />
                                 }
+                                maxLength={4}
+                                required
                               />
                               <Button
                                 style={{
@@ -200,7 +244,7 @@ class LoginComponent extends Component {
                               >
                                 验证码
                               </Button>
-                            </>,
+                            </div>,
                           )}
                         </Form.Item>
 
@@ -300,6 +344,9 @@ class LoginComponent extends Component {
                               marginTop: '70px',
                             }}
                             className="check-func-login"
+                            onChange={ev => {
+                              handleAutoLogin(ev.target.checked);
+                            }}
                           >
                             自动登录
                           </Checkbox>
@@ -325,6 +372,15 @@ class LoginComponent extends Component {
             </div>
           </div>
         </div>
+        <Row
+          style={{
+            width: '100%',
+          }}
+        >
+          <Col span={12} offset={6}>
+            <div className="copyright-login">Copyright © 2019 河北宽广控股集团 - 信息管理中心</div>
+          </Col>
+        </Row>
       </div>
     );
   }

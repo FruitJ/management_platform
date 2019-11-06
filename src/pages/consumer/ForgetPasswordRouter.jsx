@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
  * @date 2019-10-31
  * @Description: 忘记密码组件 (路由组件、有状态组件)
  */
-export default class ForgetPasswordRouter extends Component {
+class ForgetPasswordRouter extends Component {
   constructor(props) {
     super(props);
   }
@@ -22,3 +22,4 @@ export default class ForgetPasswordRouter extends Component {
     );
   }
 }
+export default ForgetPasswordRouter;

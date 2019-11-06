@@ -47,4 +47,7 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
+  'menu.goods-manage': '商品管理',
+  'menu.goods-manage.query': '商品查询',
+  'menu.goods-manage.add': '商品添加',
 };

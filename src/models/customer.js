@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 
 export default {
-  namespace: 'consumer',
+  namespace: 'customer',
   state: {},
   effects: {},
   reducers: {},

@@ -18,13 +18,14 @@ export default {
     *initWelcomeData({}, { call, put }) {
       // 初始化欢迎页的页面数据
       const res = yield call(initWelcomeData);
+      alert(1);
       yield put({
         type: 'defaultWelcomeData',
         payload: res,
       });
     },
     *toLogin({}, { call, put }) {
-      yield put(routerRedux.push('/consumer/login'));
+      yield put(routerRedux.push('/user/login'));
     },
   },
   reducers: {
@@ -76,6 +77,9 @@ export default {
     // 返回异步获取到的欢迎页的初始化数据
     defaultWelcomeData(state, { payload: res }) {
       state.list = res;
+      console.log('---');
+      alert(1);
+      console.log(state.list);
       // console.log(state.list.app_content_func.ctlGoods);
       return { ...state };
     },
@@ -84,7 +88,7 @@ export default {
     setup({ dispatch, history }) {
       // 订阅欢迎页需要的数据
       return history.listen(({ pathname }) => {
-        if (pathname === '/') {
+        if (pathname === '/welcome') {
           dispatch({
             type: 'initWelcomeData',
           });

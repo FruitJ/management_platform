@@ -14,6 +14,8 @@ import {
   CONSUMER_LOGIN$BACK,
   CONSUMER_LOGIN$TO_FORGET_PASSWORD_PAGE,
   CONSUMER_LOGIN$TO_REGISTER,
+  CONSUMER_LOGIN$LOGIN,
+  CONSUMER_LOGIN$_AUTO_LOGIN,
 } from './static/config';
 
 /**
@@ -37,7 +39,7 @@ const LoginRouter = ({ dispatch, consumerLogin }) => {
     dispatch({
       type: CONSUMER_LOGIN$_LOGIN_IS_AGREE_KG_AGREEMENT,
       payload: {
-        tag: val,
+        val: val,
       },
     });
   }
@@ -53,7 +55,16 @@ const LoginRouter = ({ dispatch, consumerLogin }) => {
     dispatch({
       type: CONSUMER_LOGIN$_MODEL_STATE,
       payload: {
-        tag: val,
+        val: val,
+      },
+    });
+  }
+
+  function handleAutoLogin(val) {
+    dispatch({
+      type: CONSUMER_LOGIN$_AUTO_LOGIN,
+      payload: {
+        val: val,
       },
     });
   }
@@ -84,6 +95,14 @@ const LoginRouter = ({ dispatch, consumerLogin }) => {
     });
   }
 
+  // 登录功能的回调函数
+  function handleSubmit(data) {
+    dispatch({
+      type: CONSUMER_LOGIN$LOGIN,
+      payload: data,
+    });
+  }
+
   return (
     <div className="container-login">
       <Login
@@ -96,6 +115,8 @@ const LoginRouter = ({ dispatch, consumerLogin }) => {
         handleSwitchSkin={handleSwitchSkin}
         handleForgetPassword={handleForgetPassword}
         handleRegister={handleRegister}
+        handleSubmit={handleSubmit}
+        handleAutoLogin={handleAutoLogin}
       />
     </div>
   );

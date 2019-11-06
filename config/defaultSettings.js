@@ -10,7 +10,7 @@ export default {
   menu: {
     locale: true,
   },
-  title: 'Ant Design Pro',
+  title: '三方商户管理平台',
   pwa: false,
   iconfontUrl: '',
 };
