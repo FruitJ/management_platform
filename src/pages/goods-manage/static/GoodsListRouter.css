@@ -1,4 +1,16 @@
 :global(.column-goodsClasses, .column-goodsBrand, .column-goodsPrice) {
   padding-left: 0 !important;
 }
+:global .ant-drawer.ant-drawer-open .ant-drawer-mask {
+  opacity: 0.3;
+  animation: antdDrawerFadeIns 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+}
+@keyframes antdDrawerFadeIns {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
 /*# sourceMappingURL=GoodsListRouter.css.map */

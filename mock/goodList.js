@@ -402,6 +402,7 @@ const list = Mock.mock({
       goodsStock: '100',
       description: 'test data ...',
       upperTime: '2018年11月05日 05:30:23',
+      key: '0',
     },
     {
       goodsName: '森海塞尔（Sennheiser）MomentumTrueWireless 真无线蓝牙hifi发烧入耳式耳机',
@@ -420,6 +421,7 @@ const list = Mock.mock({
       goodsStock: '100',
       description: 'test data ...',
       upperTime: '2018年1月05日 05:30:23',
+      key: '1',
     },
     {
       goodsName:
@@ -436,6 +438,7 @@ const list = Mock.mock({
       goodsStock: '100',
       description: 'test data ...',
       upperTime: '2018年06月06日 05:30:23',
+      key: '2',
     },
     {
       goodsName: '伟嘉 宠物猫粮',
@@ -454,6 +457,7 @@ const list = Mock.mock({
       goodsStock: '100',
       description: 'test data ...',
       upperTime: '2018年08月05日 06:05:23',
+      key: '3',
     },
     {
       goodsName: '崂山啤酒',
@@ -472,6 +476,7 @@ const list = Mock.mock({
       goodsStock: '32',
       description: 'test data ...',
       upperTime: '2019年11月05日 05:30:23',
+      key: '4',
     },
     {
       goodsName: '博朗（BRAUN）电动剃须刀',
@@ -489,6 +494,7 @@ const list = Mock.mock({
       goodsStock: '200',
       description: 'test data ...',
       upperTime: '2017年12月05日 05:05:23',
+      key: '5',
     },
     {
       goodsName: '徐福记 沙皇礼盒 沙琪玛礼盒整箱糕点心',
@@ -506,6 +512,7 @@ const list = Mock.mock({
       goodsStock: '200',
       description: 'test data ...',
       upperTime: '2018年12月05日 11:30:23',
+      key: '6',
     },
     {
       goodsName: '五粮液52度普五',
@@ -524,6 +531,7 @@ const list = Mock.mock({
       goodsStock: '600',
       description: 'test data ...',
       upperTime: '2019年11月05日 16:30:23',
+      key: '7',
     },
     {
       goodsName: '白猫柠檬红茶洗洁精',
@@ -541,6 +549,7 @@ const list = Mock.mock({
       goodsStock: '800',
       description: 'test data ...',
       upperTime: '2019年11月04日 05:39:23',
+      key: '8',
     },
     {
       goodsName: '加多宝 凉茶植物饮料',
@@ -559,6 +568,7 @@ const list = Mock.mock({
       goodsStock: '90',
       description: 'test data ...',
       upperTime: '2018年03月05日 05:30:23',
+      key: '9',
     },
     {
       goodsName: '加多宝 凉茶植物饮料',
@@ -577,6 +587,7 @@ const list = Mock.mock({
       goodsStock: '90',
       description: 'test data ...',
       upperTime: '2018年03月05日 05:30:23',
+      key: '10',
     },
     {
       goodsName: '白猫柠檬红茶洗洁精',
@@ -594,6 +605,7 @@ const list = Mock.mock({
       goodsStock: '800',
       description: 'test data ...',
       upperTime: '2019年11月04日 05:39:23',
+      key: '11',
     },
     {
       goodsName: '五粮液52度普五',
@@ -612,6 +624,7 @@ const list = Mock.mock({
       goodsStock: '600',
       description: 'test data ...',
       upperTime: '2019年11月05日 16:30:23',
+      key: '12',
     },
     {
       goodsName: '徐福记 沙皇礼盒 沙琪玛礼盒整箱糕点心',
@@ -629,6 +642,7 @@ const list = Mock.mock({
       goodsStock: '200',
       description: 'test data ...',
       upperTime: '2018年12月05日 11:30:23',
+      key: '13',
     },
     {
       goodsName: '博朗（BRAUN）电动剃须刀',
@@ -646,6 +660,7 @@ const list = Mock.mock({
       goodsStock: '200',
       description: 'test data ...',
       upperTime: '2017年12月05日 05:05:23',
+      key: '14',
     },
     {
       goodsName: '崂山啤酒',
@@ -664,6 +679,7 @@ const list = Mock.mock({
       goodsStock: '32',
       description: 'test data ...',
       upperTime: '2019年11月05日 05:30:23',
+      key: '15',
     },
     {
       goodsName: '伟嘉 宠物猫粮',
@@ -682,6 +698,7 @@ const list = Mock.mock({
       goodsStock: '100',
       description: 'test data ...',
       upperTime: '2018年08月05日 06:05:23',
+      key: '16',
     },
     {
       goodsName:
@@ -698,6 +715,7 @@ const list = Mock.mock({
       goodsStock: '100',
       description: 'test data ...',
       upperTime: '2018年06月06日 05:30:23',
+      key: '17',
     },
     {
       goodsName: '森海塞尔（Sennheiser）MomentumTrueWireless 真无线蓝牙hifi发烧入耳式耳机',
@@ -716,6 +734,7 @@ const list = Mock.mock({
       goodsStock: '100',
       description: 'test data ...',
       upperTime: '2018年1月05日 05:30:23',
+      key: '18',
     },
     {
       goodsName: '农夫山泉17.5°苹果',
@@ -734,6 +753,7 @@ const list = Mock.mock({
       goodsStock: '100',
       description: 'test data ...',
       upperTime: '2018年11月05日 05:30:23',
+      key: '19',
     },
   ],
   totalCount: 200,

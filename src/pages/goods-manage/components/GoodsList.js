@@ -157,7 +157,10 @@ const GoodsListComponent = props => {
                     pagination={props.goods.pagination}
                     loading={props.goods.loading}
                     onChange={props.handleTabChange}
-                    expandedRowRender={record => <p style={{ margin: 0 }}>上架时间 : 123</p>}
+                    expandedRowRender={record => {
+                      console.warn(record);
+                      return <p style={{ margin: 0 }}>上架时间 : {record.upperTime}</p>;
+                    }}
                     rowSelection={rowSelection}
                     style={{
                       marginTop: '16px',
