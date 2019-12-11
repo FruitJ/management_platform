@@ -127,13 +127,26 @@ export default {
     basePath: '/',
   },
   chainWebpack: webpackPlugin,
-  /*
   proxy: {
-    '/server/api/': {
-      target: 'https://preview.pro.ant.design/',
+    '/api/backend/beanmall/third/goods/category/list': {
+      target: 'http://192.168.250.192:9097/',
       changeOrigin: true,
-      pathRewrite: { '^/server': '' },
+      pathRewrite: { '^/api': 'v1' },
+    },
+    '/api/backend/beanmall/third/qiniu/token/no/callback': {
+      target: 'http://192.168.250.192:9097/',
+      changeOrigin: true,
+      pathRewrite: { '^/api': 'v1' },
+    },
+    '/api/uploadTopPicService': {
+      target: 'https://up-z1.qiniup.com',
+      changeOrigin: true,
+      pathRewrite: { '^/api/uploadTopPicService': '' },
+    },
+    '/api/uploadBottomPicService': {
+      target: 'https://up-z1.qiniup.com',
+      changeOrigin: true,
+      pathRewrite: { '^/api/uploadBottomPicService': '' },
     },
   },
-  */
 };

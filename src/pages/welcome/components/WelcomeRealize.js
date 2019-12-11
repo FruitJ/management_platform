@@ -15,7 +15,7 @@ import './WelcomeRealize.less';
  */
 const WelcomeRealize = ({ onChangeLogoStyle, welcome, onRegister, onLogin }) => {
   return (
-    <div className="container">
+    <div className="container-welcome">
       <div className="substance">
         {/* 导航区域 */}
         <WelcomeNav welcome={welcome} onRegister={onRegister} onLogin={onLogin} />

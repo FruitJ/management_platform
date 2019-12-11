@@ -47,14 +47,24 @@ export const routes = [
             icon: 'shopping',
             routes: [
               {
-                path: '/goods-manage/action/query',
+                path: '/goods-manage/query/spu-list',
                 name: 'query',
-                component: '../pages/goods-manage/GoodsListRouter',
+                component: '../pages/goods-manage/SpuListRouter',
               },
               {
-                path: '/goods-manage/action/add',
+                path: '/goods-manage/add/sku-item',
                 name: 'add',
-                component: './goods-manage/GoodsAddRouter',
+                component: './goods-manage/SkuAddRouter',
+              },
+              {
+                path: '/goods-manage/query/sku-list',
+                component: '../pages/goods-manage/SkuListRouter',
+              },
+              {
+                path: '/goods-manage/update/brand',
+                name: 'goodsCategory',
+                authority: ['张无忌'],
+                component: '../pages/goods-manage/GoodsCategoryRouter',
               },
             ],
           },

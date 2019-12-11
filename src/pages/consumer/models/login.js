@@ -1,7 +1,8 @@
 // 导入官方包
 import { routerRedux } from 'dva/router';
 const md5 = require('js-md5');
-
+import { setAuthority } from '@/utils/authority';
+import { getPageQuery } from '@/utils/utils';
 // 导入自定义的包
 import { login } from '@/services/login';
 
@@ -29,20 +30,48 @@ export default {
     },
     *login({ payload: data }, { call, put }) {
       // 提交数据
-
+      console.log('--- +++ ---');
+      console.log(data);
       // 判断当前登录方式，对密码进行 md5 摘要
       data.userName !== undefined ? (data.userPwd = md5(data.userPwd)) : null;
       console.log('===');
       console.log(data);
-      let res = yield call(login, JSON.stringify(data));
+      let res = yield call(login, data);
+      console.warn('------');
+      console.log(res);
       // 调用 _login 函数来更新状态
       yield put({
         type: '_login',
         payload: res,
       });
+      alert('啦啦啦');
+      console.log(res.status);
+      if (res.status === 'ok') {
+        const urlParams = new URL(window.location.href);
+        const params = getPageQuery();
+        let { redirect } = params;
+
+        if (redirect) {
+          const redirectUrlParams = new URL(redirect);
+
+          if (redirectUrlParams.origin === urlParams.origin) {
+            redirect = redirect.substr(urlParams.origin.length);
+
+            if (redirect.match(/^\/.*#/)) {
+              redirect = redirect.substr(redirect.indexOf('#') + 1);
+            }
+          } else {
+            alert('a');
+            window.location.href = '/';
+            return;
+          }
+        }
+        alert('b');
+        yield put(routerRedux.replace(redirect || '/'));
+      }
 
       // 跳转到主界面
-      yield put(routerRedux.push('/home'));
+      // yield put(routerRedux.push('/home'));
     },
   },
   reducers: {
@@ -67,9 +96,12 @@ export default {
       tag.val ? (state.isAgreeKGAgreement = true) : (state.isAgreeKGAgreement = false);
       return { ...state };
     },
-    _login(state, { payload: res }) {
-      state.userStatus = res;
-      return { ...state };
+    _login(state, { payload }) {
+      state.userStatus = payload;
+      console.log('&&&&');
+      console.log(payload);
+      setAuthority(payload.currentAuthority);
+      return { ...state, status: payload.status, type: payload.type };
     },
     _autoLogin(state, { payload: tag }) {
       state.isAutoLogin = tag.val;

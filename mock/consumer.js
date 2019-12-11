@@ -1,7 +1,7 @@
 const Mock = require('mockjs');
 
 // 模拟登录的返回数据
-const list = Mock.mock({
+/*const list = Mock.mock({
   msg: 'ok',
   role: 'business',
   user: {
@@ -9,11 +9,69 @@ const list = Mock.mock({
     userPhone: '110',
     userAddress: '北京五道口',
   },
+});*/
+const list = Mock.mock('/api/login/account', 'POST', option => {
+  console.log('sdadasdasda');
+
+  return {
+    msg: 'ok',
+    role: 'business',
+    user: {
+      userName: '习大大',
+      userPhone: '110',
+      userAddress: '北京五道口',
+    },
+  };
 });
 
 module.exports = {
   /* 拦截登录请求并返回模拟数据 */
   ['POST /api/login/account'](req, res) {
-    res.status(200).json(list);
+    const { userPwd, userName, type } = req.body;
+    console.log(`userPwd: ${userPwd}; userName: ${userName}; type: ${type}`);
+    if (userPwd === 'ant.design' && userName === 'admin') {
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: 'admin',
+      });
+      return;
+    }
+
+    if (userPwd === 'ant.design' && userName === 'user') {
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: 'user',
+      });
+      return;
+    }
+
+    if (userPwd === 'e10adc3949ba59abbe56e057f20f883e' && userName === '张无忌') {
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: '张无忌',
+      });
+      return;
+    }
+    if (userPwd === 'e10adc3949ba59abbe56e057f20f883e' && userName === '张三') {
+      res.send({
+        status: 'ok',
+        type,
+        currentAuthority: '张三',
+      });
+      return;
+    }
+
+    res.send({
+      status: 'error',
+      type,
+      currentAuthority: 'guest',
+    });
+
+    // console.log("s21d35a65d46a");
+    // let str = JSON.stringify(req);
+    // res.status(200).json(list);
   },
 };

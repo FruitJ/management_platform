@@ -31,11 +31,12 @@ const Model = {
               redirect = redirect.substr(redirect.indexOf('#') + 1);
             }
           } else {
+            alert('a');
             window.location.href = redirect;
             return;
           }
         }
-
+        alert('b');
         yield put(routerRedux.replace(redirect || '/'));
       }
     },

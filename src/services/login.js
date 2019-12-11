@@ -1,9 +1,13 @@
 import request from '@/utils/request';
+import qs from 'qs';
 
 export async function login(params) {
   // 登录
   return request('/api/login/account', {
     method: 'POST',
-    data: params,
+    body: qs.stringify(params),
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   });
 }
