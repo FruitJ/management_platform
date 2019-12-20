@@ -7,7 +7,9 @@ import {
   initIdDataService,
   createNewCategoryService,
   reqGoodsCategoryService,
+  reqGoodsSpecsService,
   addTopPicsUrlService,
+  addSkuGoodsService,
 } from '@/services/addSkuService';
 import { uploadPics } from '@/utils/uploadPicsToQiniu';
 
@@ -48,6 +50,9 @@ export default {
     },
     newCategoryVal: '',
     goodsCategory: [],
+    isFill: false,
+    category_id: 0,
+    goodsSpecs: [],
   },
   effects: {
     *getToken({ payload: data }, { call, put }) {
@@ -125,12 +130,23 @@ export default {
       });
       console.log(res);
     },
-    /**updateTopPicsList( { payload: suffix }, { call, put } ) {
-			
-			// let res = yield call(addTopPicsUrlService, {
-			// 	url: `DOMAIN_NAME${ suffix }`
-			// });
-		},*/
+    *reqGoodsSpecs( { payload: user }, { call, put } ) {
+      
+      // 请求商品规格数据
+      let res = yield call(reqGoodsSpecsService, user);
+      console.log("游客站在路灯下");
+      console.log(res);
+      // 保存商品规格信息
+      yield put({
+        type: "_saveGoodsSpecs",
+        payload: res.data.spec_option
+      });
+    },
+    *addSkuGoods( { payload: data }, { call, put } ) {
+      
+      let res = yield call(addSkuGoodsService, data);
+      console.log(res);
+    },
   },
   reducers: {
     _createNewCategory(state, { payload: data }) {
@@ -204,6 +220,7 @@ export default {
       state.goodsCategory = res.data.category_list;
       console.log('---------++++++++++---------');
       console.log(res.data.category_list);
+      
       return { ...state };
     },
     _updateTopPicsList(state, { payload: suffix }) {
@@ -238,6 +255,17 @@ export default {
         status: 'done',
         url: `${DOMAIN_NAME}${suffix}`,
       });
+      return { ...state };
+    },
+    '_saveSelectedCategoryId'( state, { payload: index } ) {
+      state.category_id = index;
+      return { ...state };
+    },
+    '_saveGoodsSpecs'( state, { payload: specs } ) {
+      state.goodsSpecs = specs;
+      console.log("-- ^ 分割线 ^ --");
+      console.log(state.goodsSpecs);
+      console.log("-- ^ 分割线 ^ --");
       return { ...state };
     },
   },

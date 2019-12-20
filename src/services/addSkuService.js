@@ -54,6 +54,29 @@ export async function reqGoodsCategoryService() {
   });
 }
 
+export async function reqGoodsSpecsService(params) {
+  
+  return request("/api/backend/beanmall/third/goods/spec/option/all", {
+    method: "POST",
+    body: JSON.stringify(params),
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+  });
+}
+
+export async function addSkuGoodsService(params) {
+  
+  return request("/api/backend/beanmall/third/goods/create", {
+    method: "POST",
+    body: JSON.stringify(params),
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+  });
+}
+
+
 /*export async function addTopPicsUrlService(params) {
 	
 	return request("/api/addTopPicsUrlService", {

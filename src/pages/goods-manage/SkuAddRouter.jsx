@@ -119,6 +119,7 @@ class SkuAddRouter extends Component {
   };
 
   handleGetToken = () => {
+    alert("execute ...");
     count += 1;
     if (count === 1) {
       // 判断当前的 token 是否存活
@@ -206,7 +207,42 @@ class SkuAddRouter extends Component {
       type: 'addSku/reqGoodsCategory',
     });
   };
-
+  
+  handleSelectCategory = (value, selectedOption) => {
+    console.log("-- 分割线 --");
+    console.log(value);
+    console.log(selectedOption);
+    this.props.dispatch({
+      type: "addSku/_saveSelectedCategoryId",
+      payload: Number(selectedOption[selectedOption.length - 1].key),
+    });
+    
+    console.log("-- 分割线 --");
+  };
+  
+  handleReqGoodsSpecs = () => {
+    
+    // 获取商户 id
+    const MERCHANT_ID = 1;
+    
+    // 请求商品规格数据
+    this.props.dispatch({
+      type: "addSku/reqGoodsSpecs",
+      payload: {
+        merchant_id: MERCHANT_ID,
+      }
+    });
+  };
+  
+  handleSubmitSkuData = (data) => {
+  
+    // 将数据提交到后台
+    this.props.dispatch({
+      type: "addSku/addSkuGoods",
+      payload: data
+    });
+  };
+  
   normFileTopPic = ev => {
     console.log('Upload event:', ev);
     if (Array.isArray(ev)) {
@@ -236,6 +272,9 @@ class SkuAddRouter extends Component {
       normFileTopPic,
       handleReqGoodsCategory,
       handleChangeTopSkuPic,
+      handleSelectCategory,
+      handleReqGoodsSpecs,
+      handleSubmitSkuData,
     } = this;
 
     return (
@@ -260,6 +299,9 @@ class SkuAddRouter extends Component {
           onCustomBottomUpload={handleCustomBottomUpload}
           onChangeNewInputVal={handleChangeNewInputVal}
           onReqGoodsCategory={handleReqGoodsCategory}
+          onSelectCategory={ handleSelectCategory }
+          onReqGoodsSpecs={ handleReqGoodsSpecs }
+          onSubmitSkuData={ handleSubmitSkuData }
           addSku={this.props.addSku}
           normFileTopPic={normFileTopPic}
         />

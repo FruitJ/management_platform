@@ -148,5 +148,20 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api/uploadBottomPicService': '' },
     },
+    '/api/backend/beanmall/third/goods/create': {
+      target: 'http://192.168.250.192:9097/',
+      changeOrigin: true,
+      pathRewrite: { '^/api': 'v1' },
+    },
+    '/api/backend/beanmall/third/goods/spec/option/all': {
+      target: 'http://192.168.250.192:9097/',
+      changeOrigin: true,
+      pathRewrite: { '^/api': 'v1' },
+    },
+    '/api/backend/beanmall/third/goods/category/create': {
+      target: 'http://192.168.250.192:9097/',
+      changeOrigin: true,
+      pathRewrite: { '^/api': 'v1' },
+    },
   },
 };

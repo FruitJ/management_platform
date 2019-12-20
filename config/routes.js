@@ -66,6 +66,11 @@ export const routes = [
                 authority: ['张无忌'],
                 component: '../pages/goods-manage/GoodsCategoryRouter',
               },
+              {
+                path: '/goods-manage/update/spu-details:spu_id',
+                name: 'details',
+                component: '../pages/goods-manage/SpuDetailsRouter',
+              },
             ],
           },
           {

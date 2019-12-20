@@ -13,7 +13,7 @@ export default {
     *toSkuList({ payload: spu_id }, { call, put }) {
       // 跳转界面
       yield put(routerRedux.push('/goods-manage/query/sku-list'));
-
+      // yield put(routerRedux.push("/goods-manage/update/spu-details"));
       // 存储 spu_id
       yield put({
         type: '_toTempSaveSpu_id',

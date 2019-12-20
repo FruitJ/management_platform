@@ -51,4 +51,5 @@ export default {
   'menu.goods-manage.query': '商品查询',
   'menu.goods-manage.add': '商品添加',
   'menu.goods-manage.goodsCategory': '商品分类',
+  'menu.goods-manage.details': '商品详情',
 };

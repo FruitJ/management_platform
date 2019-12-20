@@ -1,0 +1,17 @@
+:global {
+  /* .ant-col.ant-col-12 {
+    margin-left: 40px;
+    width: 90% !important;
+  }*/
+}
+:global .ant-tree-node-content-wrapper {
+  width: 100%;
+}
+:global .ant-tree-title {
+  width: 100% !important;
+  background: #FF0 !important;
+}
+:global .ant-modal-mask {
+  background: rgba(0, 0, 0, 0.15);
+}
+/*# sourceMappingURL=GoodsCategory.css.map */

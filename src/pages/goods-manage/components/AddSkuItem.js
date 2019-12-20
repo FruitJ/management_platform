@@ -193,7 +193,51 @@ const SkuForm = props => {
     ev.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
+        
+        console.log(props.addSku.topFileList);
+        const { topFileList } = props.addSku;
+        let top_urls = [];
+          topFileList.forEach((item, index) => {
+              top_urls.push(item.url);
+          });
+        let bottom_urls = [];
+          const { bottomFileList } = props.addSku;
+          bottomFileList.forEach((item, index) => {
+              bottom_urls.push(item.url);
+          });
+        console.log(top_urls);
+        // 提交页面数据
+        let data = {
+            merchant_id: 1,
+            spu_name: values.goodsName,
+            category_id: props.addSku.category_id,
+            top_urls: top_urls,
+            bottom_urls: bottom_urls,
+            sku_list: []
+        };
+        // 获取表单数据
+        
+        // 获取上传图片数据
+        const { getGoodsSpecsData } = require('../../../components/DynamicTableGenerator/utils');
+        // 获取商品规格数据
+        console.log(getGoodsSpecsData());
+        
+        let specs = getGoodsSpecsData();
+        for(let i = 0; i < specs.length; i++) {
+            data.sku_list.push({
+                sku_url: specs[i].goods_pics,
+                price: specs[i].goods_price,
+                stock: Number(specs[i].goods_stock),
+                spec_option_id_list: [2, 3],
+            });
+        }
+        console.log(JSON.stringify(data));
         console.log('Received values of form: ', values);
+        // 提交数据
+        
+        props.onSubmitSkuData(data);
+        
+        
       }
     });
   };
@@ -304,12 +348,12 @@ const SkuForm = props => {
                 marginLeft: '-11px',
               }}
             >
-              {getFieldDecorator('goodsBarCode', {
-                rules: [{ required: true, message: 'Please input your Password!' }],
+              {getFieldDecorator('goodsName', {
+                rules: [{ required: true, message: '请输入商品名称!' }],
               })(
                 <Input
                   prefix={<Icon type="shopping" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  type="password"
+                  type="text"
                   placeholder="例如 : Oppo R17"
                   style={{
                     width: '300px',
@@ -341,10 +385,14 @@ const SkuForm = props => {
                       {
                         type: 'array',
                         required: true,
-                        message: 'Please select your habitual residence!',
+                        message: '请选择商品分类!',
                       },
                     ],
-                  })(<Cascader options={props.addSku.goodsCategory} />)}
+                  })(
+                      <Cascader options = {props.addSku.goodsCategory}
+                                onChange = { props.onSelectCategory }
+                  />
+                  )}
                 </Form.Item>
 
                 <br />
@@ -524,14 +572,7 @@ const SkuForm = props => {
 						</Form.Item>
 					</Col>*/}
         </Row>
-        <Divider
-          orientation="left"
-          style={{
-            marginTop: '50px',
-          }}
-        >
-          规格信息 (SKU)
-        </Divider>
+        
         {/* 添加商品规格组件 */}
         {/*<GoodsSpecsGenerator />*/}
         {/*<Form.Item>
@@ -539,22 +580,43 @@ const SkuForm = props => {
 								        Log in
 							        </Button>
 						        </Form.Item>*/}
+    
+          <Divider
+              orientation="left"
+              style={{
+                  marginTop: '50px',
+              }}
+          >
+              规格信息 (SKU)
+          </Divider>
+          {/*<GoodsSpecsGenerator addSku={props.addSku} />*/}
+          <Row style={{
+              position: "position",
+              top: "0"
+          }}>
+              <Col
+                  span={6}
+                  offset={0}
+                  style={{
+                      position: "absolute",
+                      top: "-75px",
+                      right: "-23px",
+                      // marginBottom: '30px',
+                      // marginTop: '25px',
+                      textAlign: 'center',
+                  }}
+              >
+    
+                  <Form.Item>
+                      <Button type="primary" htmlType="submit">
+                          保存
+                      </Button>
+                      
+                  </Form.Item>
+              </Col>
+              </Row>
       </Form>
-      <GoodsSpecsGenerator />
-
-      <Row>
-        <Col
-          span={12}
-          offset={6}
-          style={{
-            marginBottom: '30px',
-            marginTop: '25px',
-            textAlign: 'center',
-          }}
-        >
-          <Button type="primary">保存</Button>
-        </Col>
-      </Row>
+        <GoodsSpecsGenerator addSku={props.addSku} />
     </div>
   );
 };
@@ -576,14 +638,17 @@ const AddSkuItem = props => {
   useEffect(() => {
     // 获取路由中的参数
     console.log(props);
-
-    // 初始化商品分类信息
-    props.onReqGoodsCategory();
-
+    
     // 获取上传图片的 token
     // 判断当前 token 是否已经过期
     props.onGetToken();
+    
+    // 初始化商品分类信息
+    props.onReqGoodsCategory();
 
+    // 初始化商品规格信息
+    props.onReqGoodsSpecs();
+    
     // 获取初始数据 ( id 数据 )
     props.onInitIdData();
   }, []);
@@ -637,6 +702,8 @@ const AddSkuItem = props => {
                 onCustomTopUpload={props.onCustomTopUpload}
                 onCustomBottomUpload={props.onCustomBottomUpload}
                 onChangeNewInputVal={props.onChangeNewInputVal}
+                onSelectCategory = { props.onSelectCategory }
+                onSubmitSkuData = { props.onSubmitSkuData }
                 isShowSkuClassModal={props.isShowSkuClassModal}
                 addSku={props.addSku}
                 normFileTopPic={props.normFileTopPic}

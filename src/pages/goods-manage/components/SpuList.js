@@ -152,7 +152,7 @@ const SpuListComponent = props => {
                             width: '65%',
                           }}
                         />
-                        ,
+                        
                       </label>
                     </Col>
                     <Col span={3} offset={3}>

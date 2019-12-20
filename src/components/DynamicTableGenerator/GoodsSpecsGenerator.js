@@ -8,16 +8,40 @@ import 'bootstrap/dist/css/bootstrap.css';
  * 商品规格表格生成组件
  */
 
-const GoodsSpecsGenerator = () => {
+const DOMAIN_NAME = "https://images.ikuanguang.com/";
+const GoodsSpecsGenerator = (props) => {
   useEffect(() => {
-    // 导入处理组件的 js 脚本文件
-    require('./utils');
+    
+      // console.log(props.addSku.goodsSpecs);
+      // 导入处理组件的 js 脚本文件
+      const { dynamicSpecs } = require('./utils');
+      console.log("哈哈");
+      console.log(props.addSku.goodsSpecs);
+      console.log(dynamicSpecs(props.addSku.goodsSpecs));
+      console.log("哈哈哈哈");
   }, []);
 
+  const handleClick = () => {
+    // alert("啦啦啦啦啦");
+      const { change } = require('./utils');
+      change(props.addSku.goodsSpecs, props.addSku.token.token, DOMAIN_NAME);
+      console.log("哈哈");
+  };
+  
+  const handleGetGoodsSpecs = () => {
+      const { getGoodsSpecsData } = require('./utils');
+      console.log(getGoodsSpecsData());
+  };
+  
   return (
-    <div>
+    <div style={{
+        // position: "relative",
+        // marginTop: "-65px"
+    }}>
       <div className="home-container">
-        <button className="home-addGoodsSpecs btn btn-default">添加商品规格</button>
+        <button className="home-addGoodsSpecs btn btn-default"
+                onClick = { handleClick }
+        >添加商品规格</button>
       </div>
 
       <div className="home-table"></div>
@@ -26,6 +50,7 @@ const GoodsSpecsGenerator = () => {
         style={{
           marginTop: '20px',
         }}
+        onClick = { handleGetGoodsSpecs }
       >
         获取最终的商品规格数据
       </button>

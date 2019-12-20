@@ -219,7 +219,7 @@ const SpuListParentComponent = props => {
 
                 // 跳转到 sku 界面 ( 携带 spu_id )
                 props.dispatch({
-                  type: 'sku/toSkuList',
+                  type: 'spuDetails/toSpuDetails',
                   payload: spu_id,
                 });
 
