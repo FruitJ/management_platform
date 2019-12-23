@@ -26,8 +26,9 @@ const menuDataRender = menuList =>
 const defaultFooterDom = (
   <DefaultFooter
     copyright="Copyright © 2019 河北宽广控股集团 - 信息管理中心"
-    links={[
-      {
+    links={
+      [
+        /*{
         key: 'Ant Design Pro',
         title: 'Ant Design Pro',
         href: 'https://pro.ant.design',
@@ -44,8 +45,9 @@ const defaultFooterDom = (
         title: 'Ant Design',
         href: 'https://ant.design',
         blankTarget: true,
-      },
-    ]}
+      },*/
+      ]
+    }
   />
 );
 

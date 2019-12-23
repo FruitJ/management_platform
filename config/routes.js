@@ -30,6 +30,7 @@ export const routes = [
         path: '/',
         component: '../layouts/BasicLayout',
         // authority: ['admin', 'user'],
+        // authority: ['KG'],
         routes: [
           {
             path: '/',
@@ -63,11 +64,11 @@ export const routes = [
               {
                 path: '/goods-manage/update/brand',
                 name: 'goodsCategory',
-                authority: ['张无忌'],
+                authority: ['KG'],
                 component: '../pages/goods-manage/GoodsCategoryRouter',
               },
               {
-                path: '/goods-manage/update/spu-details:spu_id',
+                path: '/goods-manage/update/spu-details',
                 name: 'details',
                 component: '../pages/goods-manage/SpuDetailsRouter',
               },

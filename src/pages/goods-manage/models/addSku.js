@@ -21,24 +21,10 @@ export default {
     isShowSkuClassModal: false,
     topPreviewVisible: false,
     topPreviewImage: '',
-    topFileList: [
-      {
-        uid: '-1',
-        name: 'image.png',
-        status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      },
-    ],
+    topFileList: [],
     bottomPreviewVisible: false,
     bottomPreviewImage: '',
-    bottomFileList: [
-      {
-        uid: '-1',
-        name: 'image.png',
-        status: 'done',
-        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-      },
-    ],
+    bottomFileList: [],
     token: {
       token: '',
       prevReqTime: 0,
@@ -130,20 +116,18 @@ export default {
       });
       console.log(res);
     },
-    *reqGoodsSpecs( { payload: user }, { call, put } ) {
-      
+    *reqGoodsSpecs({ payload: user }, { call, put }) {
       // 请求商品规格数据
       let res = yield call(reqGoodsSpecsService, user);
-      console.log("游客站在路灯下");
+      console.log('游客站在路灯下');
       console.log(res);
       // 保存商品规格信息
       yield put({
-        type: "_saveGoodsSpecs",
-        payload: res.data.spec_option
+        type: '_saveGoodsSpecs',
+        payload: res.data.spec_option,
       });
     },
-    *addSkuGoods( { payload: data }, { call, put } ) {
-      
+    *addSkuGoods({ payload: data }, { call, put }) {
       let res = yield call(addSkuGoodsService, data);
       console.log(res);
     },
@@ -220,7 +204,7 @@ export default {
       state.goodsCategory = res.data.category_list;
       console.log('---------++++++++++---------');
       console.log(res.data.category_list);
-      
+
       return { ...state };
     },
     _updateTopPicsList(state, { payload: suffix }) {
@@ -257,15 +241,15 @@ export default {
       });
       return { ...state };
     },
-    '_saveSelectedCategoryId'( state, { payload: index } ) {
+    _saveSelectedCategoryId(state, { payload: index }) {
       state.category_id = index;
       return { ...state };
     },
-    '_saveGoodsSpecs'( state, { payload: specs } ) {
+    _saveGoodsSpecs(state, { payload: specs }) {
       state.goodsSpecs = specs;
-      console.log("-- ^ 分割线 ^ --");
+      console.log('-- ^ 分割线 ^ --');
       console.log(state.goodsSpecs);
-      console.log("-- ^ 分割线 ^ --");
+      console.log('-- ^ 分割线 ^ --');
       return { ...state };
     },
   },

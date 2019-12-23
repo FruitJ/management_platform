@@ -25,6 +25,9 @@
   margin-left: 0.625rem;
   color: #e7e7e7;
 }
+:global .content-nav-welcome .nav-app-content h3 {
+  margin-top: 5px;
+}
 :global .content-nav-welcome .nav-func-module .contact {
   border: none;
   border-left: 1px solid #0e1011;

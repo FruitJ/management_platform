@@ -30,7 +30,7 @@ const routes = [
   },
   {
     path: 'first',
-    breadcrumbName: 'spu 列表',
+    breadcrumbName: '商品列表',
   },
 ];
 
@@ -43,9 +43,9 @@ const SpuListParentComponent = props => {
   // spu 表格的列数据
   const columns = [
     {
-      title: 'spu 名称',
+      title: '商品名称',
       dataIndex: 'spuName',
-      width: '10%',
+      width: '8%',
       align: 'center',
       ellipsis: true,
       sorter: (a, b) => a.spuName.length - b.spuName.length,
@@ -57,10 +57,10 @@ const SpuListParentComponent = props => {
       ),
     },
     {
-      title: 'spu 状态',
+      title: '商品状态',
       dataIndex: 'spuStatus',
       align: 'center',
-      width: '4%',
+      width: '6%',
       render: (text, record) => {
         let status = '';
         status = text ? '上架' : '下架';
@@ -82,7 +82,7 @@ const SpuListParentComponent = props => {
           1}月-${time.getDate()}日 ${time.getHours()}时:${time.getMinutes()}分:${time.getSeconds()}秒`;
       },
     },
-    {
+    /*{
       title: 'spu 类目',
       dataIndex: 'spuClasses',
       align: 'center',
@@ -131,19 +131,20 @@ const SpuListParentComponent = props => {
       onFilter: (value, record) => {
         return record.spuClasses.includes(value);
       },
-    },
+    },*/
     {
-      title: 'spu 图片',
+      title: '商品图片',
       dataIndex: 'spuPic',
       align: 'center',
-      width: '5%',
+      width: '3%',
       render: (text, record) => {
         return (
           <div
             style={{
-              marginLeft: '18px',
+              marginLeft: '12px',
               width: '60px',
               height: '60px',
+              textAlign: 'center',
             }}
           >
             <Popover
@@ -152,12 +153,14 @@ const SpuListParentComponent = props => {
                   style={{
                     width: '170px',
                     height: '170px',
+                    textAlign: 'center',
                   }}
                 >
                   <img
                     src={`${text}`}
                     alt=""
                     style={{
+                      display: 'inlineBlock',
                       width: '100%',
                       height: '100%',
                     }}
@@ -172,6 +175,7 @@ const SpuListParentComponent = props => {
                 src={`${text}`}
                 alt=""
                 style={{
+                  display: 'inlineBlock',
                   width: '100%',
                   height: '100%',
                 }}
@@ -181,18 +185,18 @@ const SpuListParentComponent = props => {
         );
       },
     },
-    {
+    /*{
       title: '库存',
       dataIndex: 'spuStock',
       align: 'center',
       width: '4%',
-    },
-    {
+    },*/
+    /*{
       title: '实时库存',
       dataIndex: 'spuRealTimeStock',
       align: 'center',
       width: '4%',
-    },
+    },*/
     {
       title: '操作',
       dataIndex: 'spu_id',
@@ -286,6 +290,7 @@ const SpuListParentComponent = props => {
       payload: true,
     });
     reqwest({
+      // 请求商品列表
       url: '/api/index/spuList',
       method: 'post',
       data: {

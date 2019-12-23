@@ -64,7 +64,7 @@ const SpuListComponent = props => {
         }}
         title="商品"
         breadcrumb={{ routes: props.routes }}
-        subTitle="spu 列表"
+        subTitle="商品列表"
       />
 
       <Row>
@@ -88,10 +88,11 @@ const SpuListComponent = props => {
                   span={7}
                   style={{
                     // marginTop: '6px',
+                    marginLeft: '24px',
                     padding: '24px',
                     paddingBottom: '10px',
                   }}
-                  offset={1}
+                  offset={0}
                 >
                   <Row>
                     <Col span={12}>
@@ -140,7 +141,7 @@ const SpuListComponent = props => {
                   {/* 表单查询区域 */}
                   <Row>
                     <Col span={8} offset={4}>
-                      <label htmlFor="spuClasses">
+                      {/*<label htmlFor="spuClasses">
                         spu 类目 :
                         <Cascader
                           id="spuClasses"
@@ -153,9 +154,9 @@ const SpuListComponent = props => {
                           }}
                         />
                         
-                      </label>
+                      </label>*/}
                     </Col>
-                    <Col span={3} offset={3}>
+                    {/*<Col span={3} offset={3}>
                       <Switch
                         checkedChildren="spu 模式"
                         unCheckedChildren="商品模式"
@@ -176,7 +177,7 @@ const SpuListComponent = props => {
                       >
                         当前为 {props.spu.isShowModel}
                       </Tag>
-                    </Col>
+                    </Col>*/}
                   </Row>
                 </Col>
               </Row>

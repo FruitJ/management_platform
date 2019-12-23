@@ -9,7 +9,7 @@ class SecurityLayout extends React.Component {
     isReady: false,
   };
 
-  componentDidMount() {
+  /*  componentDidMount() {
     this.setState({
       isReady: true,
     });
@@ -18,6 +18,20 @@ class SecurityLayout extends React.Component {
     if (dispatch) {
       dispatch({
         type: 'user/fetchCurrent',
+      });
+    }
+  }*/
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    if (dispatch) {
+      dispatch({
+        type: 'user/fetchCurrent',
+        callback: () => {
+          this.setState({
+            isReady: true,
+          });
+        },
       });
     }
   }
