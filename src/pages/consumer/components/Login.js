@@ -31,8 +31,8 @@ class LoginComponent extends Component {
     const { consumerLogin } = this.props;
 
     this.props.form.validateFields((err, values) => {
-      values.isAutoLogin = consumerLogin.isAutoLogin;
-
+      // values.isAutoLogin = consumerLogin.isAutoLogin; // 是否自动登录
+      
       if (!err) {
         if (consumerLogin.isAgreeKGAgreement) {
           this.props.handleSubmit(values);

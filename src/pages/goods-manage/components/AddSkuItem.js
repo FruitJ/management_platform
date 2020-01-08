@@ -12,12 +12,15 @@ import {
   Cascader,
   Modal,
   Upload,
+  Table,
 } from 'antd';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 
 // 导入自定义包
 import GoodsSpecsGenerator from '@/components/DynamicTableGenerator/GoodsSpecsGenerator';
+import InputBoard from "@/components/HoverInputBoard/InputBoard";
+import AddBoardBtn from "@/components/HoverInputBoard/AddBoardBtn";
 import '@/pages/goods-manage/static/AddSkuItem.less';
 
 function hasErrors(fieldsError) {
@@ -466,8 +469,6 @@ const SkuForm = props => {
                     visible={topPreviewVisible}
                     footer={null}
                     onCancel={props.onCancelTopSkuPic}
-                    // beforeUpload = { props.onBeforeUploadBottomSkuPic }
-                    // onOk = {props.onGetTopSkuPic}
                   >
                     <img alt="example" style={{ width: '100%' }} src={topPreviewImage} />
                   </Modal>
@@ -486,7 +487,6 @@ const SkuForm = props => {
             <Form.Item
               label="底部图片"
               style={{
-                // width: "336px",
                 marginLeft: '-10px',
               }}
             >
@@ -499,7 +499,6 @@ const SkuForm = props => {
                     style={{
                       width: '100%',
                       height: '100%',
-                      // overflow: "scroll"
                     }}
                   >
                     <Upload
@@ -527,57 +526,9 @@ const SkuForm = props => {
               )}
             </Form.Item>
           </Col>
-
-          {/* 库存单位 */}
-          {/*<Col span={12}
-					     style={{
-						     marginTop: "25px",
-						     textAlign: "center",
-					     }}>
-						<Form.Item label="库存单位"
-						           style={{
-						                marginLeft: "-100px"
-						           }}>
-							{getFieldDecorator('residence', {
-								initialValue: ['件'],
-								rules: [
-									{ type: 'array', required: false, message: 'Please select your habitual residence!' },
-								],
-							})(
-								<Cascader options={options}
-								/>)}
-						</Form.Item>
-					</Col>*/}
-
-          {/* 商品品牌 */}
-          {/*<Col span={6}
-					     offset={2}
-					     style={{
-						     marginTop: "25px",
-						     textAlign: "center",
-					     }}>
-						<Form.Item label="商品品牌" style={{
-							marginLeft: "0"
-						}}>
-							{getFieldDecorator('goodsBrand', {
-								initialValue: ['未分类'],
-								rules: [
-									{ type: 'array', required: false, message: 'Please select your habitual residence!' },
-								],
-							})(
-								<Cascader options={options}
-								/>)}
-						</Form.Item>
-					</Col>*/}
         </Row>
 
         {/* 添加商品规格组件 */}
-        {/*<GoodsSpecsGenerator />*/}
-        {/*<Form.Item>
-							        <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
-								        Log in
-							        </Button>
-						        </Form.Item>*/}
 
         <Divider
           orientation="left"
@@ -587,7 +538,6 @@ const SkuForm = props => {
         >
           规格信息 (SKU)
         </Divider>
-        {/*<GoodsSpecsGenerator addSku={props.addSku} />*/}
         <Row
           style={{
             position: 'position',
@@ -621,12 +571,48 @@ const SkuForm = props => {
           </Col>
         </Row>
       </Form>
-      <GoodsSpecsGenerator
+      {/*<GoodsSpecsGenerator
         addSku={props.addSku}
         style={{
           paddingBottom: '50px',
         }}
-      />
+      />*/}
+        <div>
+             {/*容器组件 ( 动态生成 )*/}
+            {props.addSku.containers.map((item, index) => (
+                <InputBoard
+                    key={index}
+                    data-key={index}
+                    dataKey={index}
+                    board={props.addSku}
+                    onParentInputClick={props.onParentInputClick}
+                    onRemoveContainerClick={props.onRemoveContainerClick}
+                    onPutValToParentInputClick={props.onPutValToParentInputClick}
+                    onPutValToChildInputClick={props.onPutValToChildInputClick}
+                    onCheckInputNow={props.onCheckInputNow}
+                    onChildCheckInputNow={props.onChildCheckInputNow}
+                    onCheckChineseInputStart={props.onCheckChineseInputStart}
+                    onCheckChineseInputEnd={props.onCheckChineseInputEnd}
+                    onAddChildNodeClick={props.onAddChildNodeClick}
+                    onSwitchChildHoverBoardStatus={props.onSwitchChildHoverBoardStatus}
+                    onRemoveAfterNative_childNames={props.onRemoveAfterNative_childNames}
+                    onCancelChildHoverBoard={props.onCancelChildHoverBoard}
+                    onAddChildNamesToRealArea={props.onAddChildNamesToRealArea}
+                    onRemoveReal_childNames={props.onRemoveReal_childNames}
+                />
+            ))}
+             {/*添加按钮组件*/}
+            <AddBoardBtn onAddComponentClick={props.onAddComponentClick} />
+        
+            <Table
+                columns={props.addSku.columns}
+                dataSource={props.addSku.data}
+                size="middle"
+                pagination={false}
+            />
+        </div>
+      
+      
     </div>
   );
 };
@@ -717,6 +703,22 @@ const AddSkuItem = props => {
                 isShowSkuClassModal={props.isShowSkuClassModal}
                 addSku={props.addSku}
                 normFileTopPic={props.normFileTopPic}
+
+                onParentInputClick={props.onParentInputClick}
+                onRemoveContainerClick={props.onRemoveContainerClick}
+                onPutValToParentInputClick={props.onPutValToParentInputClick}
+                onPutValToChildInputClick={props.onPutValToChildInputClick}
+                onCheckInputNow={props.onCheckInputNow}
+                onChildCheckInputNow={props.onChildCheckInputNow}
+                onCheckChineseInputStart={props.onCheckChineseInputStart}
+                onCheckChineseInputEnd={props.onCheckChineseInputEnd}
+                onAddChildNodeClick={props.onAddChildNodeClick}
+                onSwitchChildHoverBoardStatus={props.onSwitchChildHoverBoardStatus}
+                onRemoveAfterNative_childNames={props.onRemoveAfterNative_childNames}
+                onCancelChildHoverBoard={props.onCancelChildHoverBoard}
+                onAddChildNamesToRealArea={props.onAddChildNamesToRealArea}
+                onRemoveReal_childNames={props.onRemoveReal_childNames}
+                onAddComponentClick={props.onAddComponentClick}
               />
             </Col>
           </Row>

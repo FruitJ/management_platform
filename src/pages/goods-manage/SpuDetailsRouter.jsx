@@ -19,6 +19,7 @@ class SpuDetailsRouter extends Component {
         });*/
 
     // 从 localStorage 中获取当前的 spu id
+    console.log(localStorage.getItem('current_spu_id'));
     let spu_id = JSON.parse(localStorage.getItem('current_spu_id'));
     console.log('--- 分割线* ---');
     console.log(spu_id);

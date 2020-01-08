@@ -25,6 +25,7 @@ export default {
       yield put(routerRedux.push(`/goods-manage/update/spu-details`));
 
       // 存储 spu_id ( 存储进 localStorage 中 )
+
       localStorage.setItem('current_spu_id', spu_id);
     },
     *reqSpuDetailInfo({ payload: spu_id }, { call, put }) {
@@ -62,11 +63,9 @@ export default {
         );
       }
 
-      alert(state.current_spu_id);
       return { ...state };
     },
     _saveSpuDetailsInfo(state, { payload: data }) {
-      alert(111);
       console.log('models ...');
       console.log(data);
       // state.spuDetailsInfo.push(data);

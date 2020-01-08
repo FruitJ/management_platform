@@ -69,7 +69,7 @@ export const routes = [
               },
               {
                 path: '/goods-manage/update/spu-details',
-                name: 'details',
+                // name: 'details',
                 component: '../pages/goods-manage/SpuDetailsRouter',
               },
             ],

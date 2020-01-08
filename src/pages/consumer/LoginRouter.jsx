@@ -97,7 +97,7 @@ const LoginRouter = ({ dispatch, consumerLogin }) => {
 
   // 登录功能的回调函数
   function handleSubmit(data) {
-    data.type = 'account';
+    // data.type = 'account';
     dispatch({
       type: CONSUMER_LOGIN$LOGIN,
       payload: data,

@@ -13,11 +13,11 @@ export async function updateSpuContents(params) {
 }
 
 export async function getUpdatedSpuList(params) {
-  return request('/api/spuList/get', {
+  return request('/api/backend/beanmall/third/goods/list', {
     method: 'POST',
-    body: qs.stringify(params),
+    body: JSON.stringify(params),
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json; charset=utf-8',
     },
   });
 }

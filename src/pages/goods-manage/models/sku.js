@@ -35,7 +35,6 @@ export default {
         );
       }
 
-      alert(state.current_spu_id);
       return { ...state };
     },
   },

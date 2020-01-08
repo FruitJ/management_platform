@@ -6,7 +6,8 @@ import { connect } from 'dva';
 import { uploadPics } from '@/utils/uploadPicsToQiniu';
 
 let count = 0;
-
+let dispatch = null;
+let id = 0;
 class SkuAddRouter extends Component {
   // const SkuAddRouter = ( { dispatch, addSku } ) => {
   // class SkuAddRouter extends Component {
@@ -15,6 +16,7 @@ class SkuAddRouter extends Component {
     super(props);
     console.log('SkuAddRouter ...');
     console.log(props);
+    dispatch = this.props.dispatch;
   }
 
   getBase64 = file => {
@@ -27,7 +29,7 @@ class SkuAddRouter extends Component {
   };
 
   handleCancelSkuForm = () => {
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/_changeSkuModalStatus',
       payload: false,
     });
@@ -37,9 +39,7 @@ class SkuAddRouter extends Component {
     // 提交新创建的商品分类
     console.log(val);
 
-    // alert(addSku.newCategoryVal + 123);
-
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/createNewCategory',
       payload: {
         status: false,
@@ -51,7 +51,7 @@ class SkuAddRouter extends Component {
   };
 
   handleShowSkuClassModal = () => {
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/_changeSkuModalStatus',
       payload: true,
     });
@@ -75,7 +75,7 @@ class SkuAddRouter extends Component {
     if (!file.url && !file.preview) {
       file.preview = await this.getBase64(file.originFileObj);
     }
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/_topPreviewPic',
       payload: file,
     });
@@ -85,41 +85,40 @@ class SkuAddRouter extends Component {
     if (!file.url && !file.preview) {
       file.preview = await this.getBase64(file.originFileObj);
     }
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/_bottomPreviewPic',
       payload: file,
     });
   };
 
   handleCancelTopSkuPic = () => {
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/_topCancelPic',
     });
     // this.setState({ previewVisible: false })
   };
   handleCancelBottomSkuPic = () => {
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/_bottomCancelPic',
     });
     // this.setState({ previewVisible: false })
   };
 
   handleRemoveTopSkuPic = file => {
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/_topRemovePic',
       payload: file,
     });
   };
 
   handleRemoveBottomSkuPic = file => {
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/_bottomRemovePic',
       payload: file,
     });
   };
 
   handleGetToken = () => {
-    alert("execute ...");
     count += 1;
     if (count === 1) {
       // 判断当前的 token 是否存活
@@ -127,14 +126,12 @@ class SkuAddRouter extends Component {
         this.props.addSku.token.prevReqTime === 0 ||
         new Date().getTime() - this.props.addSku.token.prevReqTime > 58 * 60 * 1000
       ) {
-        alert(21212);
         // 重新请求 token
-        this.props.dispatch({
+        dispatch({
           type: 'addSku/getToken',
         });
       } else {
         // 不用请求 token
-        alert('no req token');
       }
     } else {
       count = 0;
@@ -142,7 +139,7 @@ class SkuAddRouter extends Component {
   };
 
   handleInitIdData = () => {
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/initIdData',
     });
   };
@@ -164,7 +161,7 @@ class SkuAddRouter extends Component {
         }).then((res) => {
             
             // 更新图片列表数据
-            this.props.dispatch({
+            dispatch({
                 type: "addSku/_updateTopPicsList",
                 payload: res.data.key
             });
@@ -175,7 +172,7 @@ class SkuAddRouter extends Component {
             console.error(err.message);
         })
         ;*/
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/uploadTopPic',
       payload: {
         token: this.props.addSku.token.token,
@@ -184,7 +181,7 @@ class SkuAddRouter extends Component {
     });
   };
   handleCustomBottomUpload = option => {
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/uploadBottomPic',
       payload: {
         token: this.props.addSku.token.token,
@@ -195,7 +192,7 @@ class SkuAddRouter extends Component {
 
   handleChangeNewInputVal = ev => {
     // 保存新建分类的用户输入内容
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/_changeNewInputVal',
       payload: ev.target.value,
     });
@@ -203,46 +200,44 @@ class SkuAddRouter extends Component {
 
   handleReqGoodsCategory = () => {
     // 请求商品分类数据
-    this.props.dispatch({
+    dispatch({
       type: 'addSku/reqGoodsCategory',
     });
   };
-  
+
   handleSelectCategory = (value, selectedOption) => {
-    console.log("-- 分割线 --");
+    console.log('-- 分割线 --');
     console.log(value);
     console.log(selectedOption);
-    this.props.dispatch({
-      type: "addSku/_saveSelectedCategoryId",
+    dispatch({
+      type: 'addSku/_saveSelectedCategoryId',
       payload: Number(selectedOption[selectedOption.length - 1].key),
     });
-    
-    console.log("-- 分割线 --");
+
+    console.log('-- 分割线 --');
   };
-  
+
   handleReqGoodsSpecs = () => {
-    
     // 获取商户 id
     const MERCHANT_ID = 1;
-    
+
     // 请求商品规格数据
-    this.props.dispatch({
-      type: "addSku/reqGoodsSpecs",
+    dispatch({
+      type: 'addSku/reqGoodsSpecs',
       payload: {
         merchant_id: MERCHANT_ID,
-      }
+      },
     });
   };
-  
-  handleSubmitSkuData = (data) => {
-  
+
+  handleSubmitSkuData = data => {
     // 将数据提交到后台
-    this.props.dispatch({
-      type: "addSku/addSkuGoods",
-      payload: data
+    dispatch({
+      type: 'addSku/addSkuGoods',
+      payload: data,
     });
   };
-  
+
   normFileTopPic = ev => {
     console.log('Upload event:', ev);
     if (Array.isArray(ev)) {
@@ -251,6 +246,244 @@ class SkuAddRouter extends Component {
     return ev && ev.fileList;
   };
 
+  
+  
+  
+  // 商品规格组件区域
+  // 点击添加按钮的回调函数
+  handleAddComponentClick = () => {
+    // 动态添加组件
+    dispatch({
+      type: 'addSku/_addContainer',
+    });
+  };
+  
+  // 获取父节点数据的回调函数
+  /**
+   * @author { FruitJ }
+   * @param { Number } key 当前正被操作的索引
+   * @return { Void } 无返回值
+   * @description 加载当前被选中的父级 input 框所要展示的数据
+   */
+  handleParentInputClick = key => {
+    dispatch({
+      type: 'addSku/loadParentNodeData',
+      payload: {
+        key,
+      },
+    });
+  };
+  
+  /**
+   * @author { FruitJ }
+   * @param { Number } index 当前 container 面板的索引
+   * @return { Void } 无返回值
+   * @description 删除当前选中的 container 面板
+   */
+  handleRemoveContainerClick = index => {
+    dispatch({
+      type: 'addSku/_removeContainer',
+      payload: {
+        index,
+      },
+    });
+  };
+  
+  /**
+   * @author { FruitJ }
+   * @param { Number } parent_id 当前选中父节点列表项 id
+   * @param { Number } dataKey 当前被操作的父节点的 id
+   * @return { Void } 无返回值
+   * @description 将当前选中的值填充进模拟表单中，同时请求其父节点下面的数据
+   */
+  handlePutValToParentInputClick = (parent_name, parent_id, dataKey) => {
+    // 判断 parentNames 中的第一个元素是否是临时添加的
+  
+    alert(parent_id);
+  
+    const { parentNames } = this.props.addSku.containers[dataKey];
+  
+    if (parentNames[0].temp !== undefined && Number.isNaN(Number(parentNames[0].parent_id))) {
+      alert(`: ${ id }`);
+      // 发送当前元素值
+      dispatch({
+        type: 'addSku/getNewParentNamesEle',
+        payload: {
+          parent_name: parentNames[0].parent_name,
+          key: dataKey,
+          parentName: parent_name,
+          parent_id: id,
+        },
+      });
+      id = 0;
+    }else {
+    
+      dispatch({
+        type: 'addSku/_putValToParentInput',
+        payload: {
+          parent_name,
+          parent_id,
+          key: dataKey,
+        },
+      });
+    
+      id = parent_id;
+    }
+  };
+  
+  // 检测中文输入
+  handleCheckChineseInputStart = () => {
+    dispatch({
+      type: 'addSku/_checkChineseInputStart',
+    });
+  };
+  
+  // 检测中文输出
+  handleCheckChineseInputEnd = () => {
+    dispatch({
+      type: 'addSku/_checkChineseInputEnd',
+    });
+  };
+  
+  // 检测正在输入
+  handleCheckInputNow = (val, key) => {
+    dispatch({
+      type: 'addSku/_bindParentHoverInput',
+      payload: {
+        value: val,
+        key,
+      },
+    });
+  };
+  
+  handleChildCheckInputNow = (val, key) => {
+    dispatch({
+      type: 'addSku/_bindChildHoverInput',
+      payload: {
+        value: val,
+        key,
+      },
+    });
+  };
+  
+  handleAddChildNodeClick = (dataKey, id, prop) => {
+    // 加载对应子节点数据
+    dispatch({
+      type: 'addSku/loadChildNodeData',
+      payload: {
+        parent_name: this.props.addSku.containers[dataKey].parentInputVal,
+        parent_id: id,
+        key: dataKey,
+        prop,
+      },
+    });
+    
+    const { parentNames } = this.props.addSku.containers[dataKey];
+  };
+  
+  handleSwitchChildHoverBoardStatus = key => {
+    let tag = false;
+    // 切换子节点的悬浮选值面板的状态
+    if (this.props.addSku.containers[key].hoverChildInputBoard_tag) {
+      tag = false;
+    } else {
+      tag = true;
+    }
+    // 隐藏
+    
+    // 更新子节点的悬浮选值面板的状态
+    dispatch({
+      type: 'addSku/_changeChildHoverBoardStatus',
+      payload: {
+        tag: tag,
+        key,
+      },
+    });
+  };
+  
+  handlePutValToChildInputClick = (child_name, child_id, dataKey, parent_id, prop) => {
+    // 将选中的子节点数据填充进容器
+    dispatch({
+      type: 'addSku/_tempSaveSelectedChildNodeData',
+      payload: {
+        child_name,
+        child_id,
+        key: dataKey,
+        parent_id,
+        prop,
+      },
+    });
+  };
+  
+  handleRemoveAfterNative_childNames = (item, key) => {
+    // 删除当前选项
+    dispatch({
+      type: 'addSku/_removeAfterNative_childNames',
+      payload: {
+        item,
+        key,
+      },
+    });
+  };
+  
+  handleCancelChildHoverBoard = key => {
+    dispatch({
+      type: 'addSku/_cancelChildHoverBoard',
+      payload: {
+        key,
+      },
+    });
+  };
+  
+  handleAddChildNamesToRealArea = key => {
+    // 判断当前数组中的元素是否有临时生成的元素
+    dispatch({
+      type: 'addSku/_judgeTempCreatedEle',
+      payload: {
+        key,
+      },
+    });
+    if (this.props.addSku.containers[key].isHaveTempCreatedEle) {
+      // 有，则先将该元素提交给后台并由后台返回一个已经替换了 id 的元素
+      
+      let temp_addEle = this.props.addSku.containers[key].afterNative_childNames.filter(
+          (item, index) => Number.isNaN(Number(item.child_id)),
+      );
+      let arr = this.props.addSku.backUp_parentNames.filter(
+          (item, index) => item.parent_name === this.props.addSku.containers[key].parentInputVal,
+      );
+      
+      // 替换上传元素的 id
+      dispatch({
+        type: 'addSku/getNewChildNamesEle',
+        payload: {
+          key,
+          temp_addEle,
+          prop: arr[0].prop,
+          parent_id: arr[0].parent_id,
+        },
+      });
+    }
+    // 将待选区域的标签移至真实区域 ( 同时清空待选区域数组 )
+    
+    dispatch({
+      type: 'addSku/_realAddChildEle',
+      payload: {
+        key,
+      },
+    });
+  };
+  
+  handleRemoveReal_childNames = (item, key) => {
+    dispatch({
+      type: 'addSku/_removeReal_childNames',
+      payload: {
+        item,
+        key,
+      },
+    });
+  };
+  
   render() {
     const {
       handleCancelSkuForm,
@@ -299,11 +532,27 @@ class SkuAddRouter extends Component {
           onCustomBottomUpload={handleCustomBottomUpload}
           onChangeNewInputVal={handleChangeNewInputVal}
           onReqGoodsCategory={handleReqGoodsCategory}
-          onSelectCategory={ handleSelectCategory }
-          onReqGoodsSpecs={ handleReqGoodsSpecs }
-          onSubmitSkuData={ handleSubmitSkuData }
+          onSelectCategory={handleSelectCategory}
+          onReqGoodsSpecs={handleReqGoodsSpecs}
+          onSubmitSkuData={handleSubmitSkuData}
           addSku={this.props.addSku}
           normFileTopPic={normFileTopPic}
+
+          onAddComponentClick={this.handleAddComponentClick}
+          onParentInputClick={this.handleParentInputClick}
+          onRemoveContainerClick={this.handleRemoveContainerClick}
+          onPutValToParentInputClick={this.handlePutValToParentInputClick}
+          onPutValToChildInputClick={this.handlePutValToChildInputClick}
+          onCheckInputNow={this.handleCheckInputNow}
+          onChildCheckInputNow={this.handleChildCheckInputNow}
+          onCheckChineseInputStart={this.handleCheckChineseInputStart}
+          onCheckChineseInputEnd={this.handleCheckChineseInputEnd}
+          onAddChildNodeClick={this.handleAddChildNodeClick}
+          onSwitchChildHoverBoardStatus={this.handleSwitchChildHoverBoardStatus}
+          onRemoveAfterNative_childNames={this.handleRemoveAfterNative_childNames}
+          onCancelChildHoverBoard={this.handleCancelChildHoverBoard}
+          onAddChildNamesToRealArea={this.handleAddChildNamesToRealArea}
+          onRemoveReal_childNames={this.handleRemoveReal_childNames}
         />
       </div>
     );

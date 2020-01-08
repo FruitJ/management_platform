@@ -42,7 +42,6 @@ export default {
         type: '_login',
         payload: res,
       });
-      alert('update state after');
       console.log(res.status);
 
       // 跳转到主界面

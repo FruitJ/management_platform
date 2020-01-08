@@ -44,11 +44,11 @@ const SpuListParentComponent = props => {
   const columns = [
     {
       title: '商品名称',
-      dataIndex: 'spuName',
+      dataIndex: 'spu_name',
       width: '8%',
       align: 'center',
       ellipsis: true,
-      sorter: (a, b) => a.spuName.length - b.spuName.length,
+      sorter: (a, b) => a.spu_name.length - b.spu_name.length,
       sortDirections: ['descend'],
       render: text => (
         <Tooltip title={text} placement="left">
@@ -69,14 +69,19 @@ const SpuListParentComponent = props => {
     },
     {
       title: '创建时间',
-      dataIndex: 'spuUpperTime',
+      dataIndex: 'create_time',
       align: 'center',
       width: '7%',
-      sorter: (a, b) => a.spuUpperTime - b.spuUpperTime,
+      sorter: (a, b) => {
+        console.log('()()()(');
+        console.log(a, b);
+        return new Date(a.create_time).getTime() - new Date(b.create_time).getTime();
+      },
       render: (text, record) => {
         // 将时间戳转换为 JavaScript 对象
-        let time = new Date(Number(text));
-
+        console.log(text);
+        let time = new Date(text);
+        console.log(time);
         // 返回中文格式的时间字符串
         return `${time.getFullYear()}年-${time.getMonth() +
           1}月-${time.getDate()}日 ${time.getHours()}时:${time.getMinutes()}分:${time.getSeconds()}秒`;
@@ -134,7 +139,7 @@ const SpuListParentComponent = props => {
     },*/
     {
       title: '商品图片',
-      dataIndex: 'spuPic',
+      dataIndex: 'img_url',
       align: 'center',
       width: '3%',
       render: (text, record) => {
@@ -167,9 +172,9 @@ const SpuListParentComponent = props => {
                   />
                 </div>
               }
-              title={
-                record.spuName.length > 10 ? record.spuName.slice(0, 20) + '...' : record.spuName
-              }
+              /*title={
+                record.spu_name.length > 10 ? record.spu_name.slice(0, 20) + '...' : record.spu_name
+              }*/
             >
               <img
                 src={`${text}`}
@@ -199,7 +204,7 @@ const SpuListParentComponent = props => {
     },*/
     {
       title: '操作',
-      dataIndex: 'spu_id',
+      dataIndex: 'spu_sn',
       align: 'center',
       width: '4%',
       render: (spu_id, record, index) => {
@@ -219,8 +224,6 @@ const SpuListParentComponent = props => {
                 cursor: 'pointer',
               }}
               onClick={() => {
-                alert(spu_id);
-
                 // 跳转到 sku 界面 ( 携带 spu_id )
                 props.dispatch({
                   type: 'spuDetails/toSpuDetails',
@@ -273,12 +276,17 @@ const SpuListParentComponent = props => {
 
   // 选择具体的 Spu 触发的回调
   const handleSelectSpu = (val, selectObj) => {
+    console.log('分割线 ...');
+    console.log(Number(selectObj.key));
+    console.log(selectObj);
+
     // 更新数据和 spu tag
     props.dispatch({
       type: 'spu/updateSpuList',
       payload: {
         spuName: val,
-        spu_id: Number(selectObj.key),
+        spu_id: selectObj.key,
+        merchant_id: 1,
       },
     });
   };
@@ -291,22 +299,30 @@ const SpuListParentComponent = props => {
     });
     reqwest({
       // 请求商品列表
-      url: '/api/index/spuList',
+      url: '/api/backend/beanmall/third/goods/list',
+      // url: '/api/index/spuList',
       method: 'post',
-      data: {
-        results: 10,
-        ...params,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
       },
+      data: JSON.stringify({
+        results: 10,
+        merchant_id: 1,
+        // ...params,
+      }),
       type: 'json',
     }).then(data => {
       const pagination = { ...props.spu.pagination };
+
+      console.log('morning ...');
+      console.log(data.data.goods_list);
       // Read total count from server
       pagination.total = data.totalCount;
       props.dispatch({
         type: SPU$_LOAD_TAB_DATA,
         payload: {
           loading: false,
-          data: data.spuList,
+          data: data.data.goods_list,
           pagination,
         },
       });
@@ -320,6 +336,7 @@ const SpuListParentComponent = props => {
       payload: {
         spuName: 'spu 标签',
         spu_id: 0,
+        merchant_id: 1,
       },
     });
   };
@@ -340,7 +357,6 @@ const SpuListParentComponent = props => {
 
   // 选择 spu 分类
   const handleSelectClasses = val => {
-    alert(val);
     // 根据所选类目更新数据源
     props.dispatch({
       type: 'spu/selectClassesUpdateSpu',
@@ -349,7 +365,6 @@ const SpuListParentComponent = props => {
   };
 
   const handleSwitchShowModel = val => {
-    alert(val);
     props.dispatch({
       type: 'spu/switchShowModel',
       payload: val,

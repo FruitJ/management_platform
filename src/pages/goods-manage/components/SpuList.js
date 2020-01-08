@@ -104,8 +104,8 @@ const SpuListComponent = props => {
                         }}
                       >
                         {props.spu.spuNames.map((item, index) => (
-                          <Option value={item.spuName} key={item.spu_id}>
-                            {item.spuName}
+                          <Option value={item.spu_name} key={item.spu_id}>
+                            {item.spu_name}
                           </Option>
                         ))}
                       </Select>

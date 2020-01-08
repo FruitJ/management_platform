@@ -123,6 +123,9 @@ export default {
       return localName;
     },
   },
+
+  // history: "hash", // 配置 hash 路由
+  // publicPath: "./", // 配置打包路径
   manifest: {
     basePath: '/',
   },
@@ -163,5 +166,15 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api': 'v1' },
     },
+    '/api/backend/beanmall/third/goods/list': {
+      target: 'http://192.168.250.192:9097/',
+      changeOrigin: true,
+      pathRewrite: { '^/api': 'v1' },
+    },
+    /*'/management_platform/login': {
+      target: "http://localhost:8080/",
+      changeOrigin: true,
+      pathRewrite: { '^/api': 'management_platform' },
+    }*/
   },
 };
