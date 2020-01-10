@@ -181,6 +181,10 @@ class SkuAddRouter extends Component {
     });
   };
   handleCustomBottomUpload = option => {
+    
+    console.warn("%^%");
+    console.log(option);
+  
     dispatch({
       type: 'addSku/uploadBottomPic',
       payload: {
@@ -311,8 +315,8 @@ class SkuAddRouter extends Component {
         payload: {
           parent_name: parentNames[0].parent_name,
           key: dataKey,
-          parentName: parent_name,
-          parent_id: id,
+          // parentName: parent_name,
+          // parent_id: id,
         },
       });
       id = 0;

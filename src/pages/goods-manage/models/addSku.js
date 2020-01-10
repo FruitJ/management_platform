@@ -181,7 +181,9 @@ export default {
     },
     // 添加新父节点数据
     *getNewParentNamesEle({ payload: param }, { call, put }) {
-      let res = yield call(getNewParentNamesEleService, param);
+      let data = JSON.parse(JSON.stringify(param));
+      delete data.key;
+      let res = yield call(getNewParentNamesEleService, data);
       res.id = res.parent_id;
       console.log("嘻嘻哈哈嘻嘻哈哈");
       console.log(res);
@@ -195,8 +197,8 @@ export default {
     
       yield put({
         type: "_putValToParentInput",
-        payload: {
-          parent_name: param.parentName,
+        payload: {// parentName
+          parent_name: param.parent_name,
           parent_id: param.parent_id,
           key: param.key,
         },
@@ -228,14 +230,25 @@ export default {
     },
     // 添加新子节点数据结
     *getNewChildNamesEle({ payload: param }, { call, put }) {
+      
+      console.log("()- 分割线 -()");
+      console.log(param);
+      
       // 替换 id 元素
       let res = yield call(getNewChildNamesEleService, {
         newElements: param.temp_addEle.map((item, index) => ({
           child_name: item.child_name,
-          prop: param.prop,
+          // prop: param.prop,
           parent_id: param.parent_id,
         })),
       });
+      
+      /*param.temp_addEle.forEach((item, index) => {
+        res[index]["child_name"] = item.child_name;
+        res[index]["parent_id"] = param.parent_id;
+      });*/
+      
+      
       console.log(res);
       res.forEach((item, index) => {
         item.prop = item.parent_id;

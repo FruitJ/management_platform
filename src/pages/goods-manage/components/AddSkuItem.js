@@ -571,14 +571,14 @@ const SkuForm = props => {
           </Col>
         </Row>
       </Form>
-      {/*<GoodsSpecsGenerator
+      <GoodsSpecsGenerator
         addSku={props.addSku}
         style={{
           paddingBottom: '50px',
         }}
-      />*/}
-        <div>
-             {/*容器组件 ( 动态生成 )*/}
+      />
+        {/*<div>
+             容器组件 ( 动态生成 )
             {props.addSku.containers.map((item, index) => (
                 <InputBoard
                     key={index}
@@ -601,7 +601,7 @@ const SkuForm = props => {
                     onRemoveReal_childNames={props.onRemoveReal_childNames}
                 />
             ))}
-             {/*添加按钮组件*/}
+             添加按钮组件
             <AddBoardBtn onAddComponentClick={props.onAddComponentClick} />
         
             <Table
@@ -610,7 +610,7 @@ const SkuForm = props => {
                 size="middle"
                 pagination={false}
             />
-        </div>
+        </div>*/}
       
       
     </div>

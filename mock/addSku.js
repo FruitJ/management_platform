@@ -230,7 +230,7 @@ module.exports = {
         // id: count,
       };
       dataSource.push(obj);
-      
+      delete obj.parent_name;
       res.status(200).json(obj);
     }
   },
@@ -263,16 +263,19 @@ module.exports = {
     newElements = newElements.map((item, index) => {
       num += 1;
       
-      
-      
-      return {
+      let obj = {
         child_id: num,
         child_name: item.child_name,
         parent_id: Number(item.parent_id),
       };
+      
+      return obj;
     });
     childDataSource.push(...newElements);
-    
+    /*newElements.forEach((item, index) => {
+      delete item.child_name;
+      delete item.parent_id;
+    });*/
     console.log('呵呵');
     console.log(newElements);
     // console.log(Array.from(req.body));
