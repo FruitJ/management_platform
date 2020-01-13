@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { message } from 'antd';
 
 import AddSkuItem from '@/pages/goods-manage/components/AddSkuItem';
 import { connect } from 'dva';
@@ -17,6 +18,7 @@ class SkuAddRouter extends Component {
     console.log('SkuAddRouter ...');
     console.log(props);
     dispatch = this.props.dispatch;
+    this.tableRef = React.createRef();
   }
 
   getBase64 = file => {
@@ -50,6 +52,7 @@ class SkuAddRouter extends Component {
     });
   };
 
+  // 显示商品分类面板
   handleShowSkuClassModal = () => {
     dispatch({
       type: 'addSku/_changeSkuModalStatus',
@@ -59,12 +62,14 @@ class SkuAddRouter extends Component {
 
   // upload 组件上传图片之前的回调 ( 检测上传的商品格式与大小 )
   handleBeforeUploadTopSkuPic = file => {
+    // 规定顶部图片上传的格式与大小
     return /image[/](?:png|(?:(?:jpg|jpeg)|gif))/.test(file.type)
       ? file.size / 1024 / 1024 < 3
       : false;
   };
 
   handleBeforeUploadBottomSkuPic = file => {
+    // 规定底部图片上传的格式与大小
     return /image[/](?:png|(?:(?:jpg|jpeg)|gif))/.test(file.type)
       ? file.size / 1024 / 1024 < 3
       : false;
@@ -91,12 +96,14 @@ class SkuAddRouter extends Component {
     });
   };
 
+  // 取消预览上传的顶部图片
   handleCancelTopSkuPic = () => {
     dispatch({
       type: 'addSku/_topCancelPic',
     });
     // this.setState({ previewVisible: false })
   };
+  // 取消预览上传的底部图片
   handleCancelBottomSkuPic = () => {
     dispatch({
       type: 'addSku/_bottomCancelPic',
@@ -104,6 +111,7 @@ class SkuAddRouter extends Component {
     // this.setState({ previewVisible: false })
   };
 
+  // 移除顶部上传的商品图片
   handleRemoveTopSkuPic = file => {
     dispatch({
       type: 'addSku/_topRemovePic',
@@ -111,6 +119,7 @@ class SkuAddRouter extends Component {
     });
   };
 
+  // 移除底部上传的商品图片
   handleRemoveBottomSkuPic = file => {
     dispatch({
       type: 'addSku/_bottomRemovePic',
@@ -118,6 +127,7 @@ class SkuAddRouter extends Component {
     });
   };
 
+  // 获取上传七牛云的 token
   handleGetToken = () => {
     count += 1;
     if (count === 1) {
@@ -181,10 +191,9 @@ class SkuAddRouter extends Component {
     });
   };
   handleCustomBottomUpload = option => {
-    
-    console.warn("%^%");
+    console.warn('%^%');
     console.log(option);
-  
+
     dispatch({
       type: 'addSku/uploadBottomPic',
       payload: {
@@ -235,6 +244,19 @@ class SkuAddRouter extends Component {
   };
 
   handleSubmitSkuData = data => {
+    // 处理数据
+    dispatch({
+      type: 'addSku/_dealCurrentData',
+      payload: {
+        table: this.tableRef.current.nextElementSibling.querySelectorAll('table')[0],
+      },
+    });
+
+    console.log('___________________________哈哈哈');
+
+    data.sku_list = this.props.addSku.sku_list;
+    console.log(this.props.addSku.sku_list);
+    console.log(data);
     // 将数据提交到后台
     dispatch({
       type: 'addSku/addSkuGoods',
@@ -250,9 +272,6 @@ class SkuAddRouter extends Component {
     return ev && ev.fileList;
   };
 
-  
-  
-  
   // 商品规格组件区域
   // 点击添加按钮的回调函数
   handleAddComponentClick = () => {
@@ -261,7 +280,7 @@ class SkuAddRouter extends Component {
       type: 'addSku/_addContainer',
     });
   };
-  
+
   // 获取父节点数据的回调函数
   /**
    * @author { FruitJ }
@@ -277,7 +296,7 @@ class SkuAddRouter extends Component {
       },
     });
   };
-  
+
   /**
    * @author { FruitJ }
    * @param { Number } index 当前 container 面板的索引
@@ -292,7 +311,7 @@ class SkuAddRouter extends Component {
       },
     });
   };
-  
+
   /**
    * @author { FruitJ }
    * @param { Number } parent_id 当前选中父节点列表项 id
@@ -302,13 +321,13 @@ class SkuAddRouter extends Component {
    */
   handlePutValToParentInputClick = (parent_name, parent_id, dataKey) => {
     // 判断 parentNames 中的第一个元素是否是临时添加的
-  
+
     alert(parent_id);
-  
+
     const { parentNames } = this.props.addSku.containers[dataKey];
-  
+
     if (parentNames[0].temp !== undefined && Number.isNaN(Number(parentNames[0].parent_id))) {
-      alert(`: ${ id }`);
+      alert(`: ${id}`);
       // 发送当前元素值
       dispatch({
         type: 'addSku/getNewParentNamesEle',
@@ -320,8 +339,7 @@ class SkuAddRouter extends Component {
         },
       });
       id = 0;
-    }else {
-    
+    } else {
       dispatch({
         type: 'addSku/_putValToParentInput',
         payload: {
@@ -330,25 +348,25 @@ class SkuAddRouter extends Component {
           key: dataKey,
         },
       });
-    
+
       id = parent_id;
     }
   };
-  
+
   // 检测中文输入
   handleCheckChineseInputStart = () => {
     dispatch({
       type: 'addSku/_checkChineseInputStart',
     });
   };
-  
+
   // 检测中文输出
   handleCheckChineseInputEnd = () => {
     dispatch({
       type: 'addSku/_checkChineseInputEnd',
     });
   };
-  
+
   // 检测正在输入
   handleCheckInputNow = (val, key) => {
     dispatch({
@@ -359,7 +377,7 @@ class SkuAddRouter extends Component {
       },
     });
   };
-  
+
   handleChildCheckInputNow = (val, key) => {
     dispatch({
       type: 'addSku/_bindChildHoverInput',
@@ -369,7 +387,7 @@ class SkuAddRouter extends Component {
       },
     });
   };
-  
+
   handleAddChildNodeClick = (dataKey, id, prop) => {
     // 加载对应子节点数据
     dispatch({
@@ -381,10 +399,10 @@ class SkuAddRouter extends Component {
         prop,
       },
     });
-    
+
     const { parentNames } = this.props.addSku.containers[dataKey];
   };
-  
+
   handleSwitchChildHoverBoardStatus = key => {
     let tag = false;
     // 切换子节点的悬浮选值面板的状态
@@ -394,7 +412,7 @@ class SkuAddRouter extends Component {
       tag = true;
     }
     // 隐藏
-    
+
     // 更新子节点的悬浮选值面板的状态
     dispatch({
       type: 'addSku/_changeChildHoverBoardStatus',
@@ -404,7 +422,7 @@ class SkuAddRouter extends Component {
       },
     });
   };
-  
+
   handlePutValToChildInputClick = (child_name, child_id, dataKey, parent_id, prop) => {
     // 将选中的子节点数据填充进容器
     dispatch({
@@ -418,7 +436,7 @@ class SkuAddRouter extends Component {
       },
     });
   };
-  
+
   handleRemoveAfterNative_childNames = (item, key) => {
     // 删除当前选项
     dispatch({
@@ -429,7 +447,7 @@ class SkuAddRouter extends Component {
       },
     });
   };
-  
+
   handleCancelChildHoverBoard = key => {
     dispatch({
       type: 'addSku/_cancelChildHoverBoard',
@@ -438,7 +456,26 @@ class SkuAddRouter extends Component {
       },
     });
   };
-  
+
+  handleTableUploadPics = info => {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+      console.log('|||||');
+      dispatch({
+        type: 'addSku/tableUploadPic',
+        payload: {
+          token: this.props.addSku.token.token,
+          file: info.file,
+        },
+      });
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name} file upload failed.`);
+    }
+  };
+
   handleAddChildNamesToRealArea = key => {
     // 判断当前数组中的元素是否有临时生成的元素
     dispatch({
@@ -449,14 +486,14 @@ class SkuAddRouter extends Component {
     });
     if (this.props.addSku.containers[key].isHaveTempCreatedEle) {
       // 有，则先将该元素提交给后台并由后台返回一个已经替换了 id 的元素
-      
+
       let temp_addEle = this.props.addSku.containers[key].afterNative_childNames.filter(
-          (item, index) => Number.isNaN(Number(item.child_id)),
+        (item, index) => Number.isNaN(Number(item.child_id)),
       );
       let arr = this.props.addSku.backUp_parentNames.filter(
-          (item, index) => item.parent_name === this.props.addSku.containers[key].parentInputVal,
+        (item, index) => item.parent_name === this.props.addSku.containers[key].parentInputVal,
       );
-      
+
       // 替换上传元素的 id
       dispatch({
         type: 'addSku/getNewChildNamesEle',
@@ -465,19 +502,51 @@ class SkuAddRouter extends Component {
           temp_addEle,
           prop: arr[0].prop,
           parent_id: arr[0].parent_id,
+          table: this.tableRef.current.nextElementSibling.querySelectorAll('table')[0],
+          handleTableUploadPics: this.handleTableUploadPics,
         },
       });
     }
     // 将待选区域的标签移至真实区域 ( 同时清空待选区域数组 )
-    
+
     dispatch({
       type: 'addSku/_realAddChildEle',
       payload: {
         key,
+        table: this.tableRef.current.nextElementSibling.querySelectorAll('table')[0],
+        dispatch,
+        handleTableUploadPics: this.handleTableUploadPics,
       },
     });
+
+    setTimeout(() => {
+      let tab_upload_btns = this.tableRef.current.nextElementSibling
+        .querySelectorAll('table')[0]
+        .querySelectorAll('.tab-upload-btn');
+      console.log("get all table's upload's btn.");
+      console.log(tab_upload_btns);
+      for (let i = 0; i < tab_upload_btns.length; i++) {
+        tab_upload_btns[i].addEventListener(
+          'click',
+          function(ev) {
+            console.log('___________________----------__________+++++++');
+            console.log(ev.target);
+            alert('获取 key');
+            let btn = ev.target;
+            console.log(Number(btn.dataset.rowKey));
+            dispatch({
+              type: 'addSku/_getCurrentUploadKey',
+              payload: {
+                key: Number(btn.dataset.rowKey),
+              },
+            });
+          },
+          false,
+        );
+      }
+    }, 0);
   };
-  
+
   handleRemoveReal_childNames = (item, key) => {
     dispatch({
       type: 'addSku/_removeReal_childNames',
@@ -487,7 +556,7 @@ class SkuAddRouter extends Component {
       },
     });
   };
-  
+
   render() {
     const {
       handleCancelSkuForm,
@@ -541,7 +610,6 @@ class SkuAddRouter extends Component {
           onSubmitSkuData={handleSubmitSkuData}
           addSku={this.props.addSku}
           normFileTopPic={normFileTopPic}
-
           onAddComponentClick={this.handleAddComponentClick}
           onParentInputClick={this.handleParentInputClick}
           onRemoveContainerClick={this.handleRemoveContainerClick}
@@ -557,6 +625,7 @@ class SkuAddRouter extends Component {
           onCancelChildHoverBoard={this.handleCancelChildHoverBoard}
           onAddChildNamesToRealArea={this.handleAddChildNamesToRealArea}
           onRemoveReal_childNames={this.handleRemoveReal_childNames}
+          tableRef={this.tableRef}
         />
       </div>
     );

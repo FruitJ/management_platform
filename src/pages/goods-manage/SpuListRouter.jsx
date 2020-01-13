@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'dva';
 import reqwest from 'reqwest';
+import UUID from 'uuidjs';
 import { Tooltip, Popover, Icon, Form, Select } from 'antd';
 
 const { Option } = Select;
@@ -58,7 +59,7 @@ const SpuListParentComponent = props => {
     },
     {
       title: '商品状态',
-      dataIndex: 'spuStatus',
+      dataIndex: 'status',
       align: 'center',
       width: '6%',
       render: (text, record) => {
@@ -143,6 +144,8 @@ const SpuListParentComponent = props => {
       align: 'center',
       width: '3%',
       render: (text, record) => {
+        // alert(text);
+
         return (
           <div
             style={{
@@ -316,6 +319,11 @@ const SpuListParentComponent = props => {
 
       console.log('morning ...');
       console.log(data.data.goods_list);
+
+      data.data.goods_list.forEach((item, index) => {
+        item.key = `${item.spu_sn}${UUID.generate()}`;
+      });
+
       // Read total count from server
       pagination.total = data.totalCount;
       props.dispatch({

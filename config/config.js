@@ -151,6 +151,11 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api/uploadBottomPicService': '' },
     },
+    '/api/uploadPicService': {
+      target: 'https://up-z1.qiniup.com',
+      changeOrigin: true,
+      pathRewrite: { '^/api/uploadPicService': '' },
+    },
     '/api/backend/beanmall/third/goods/create': {
       target: 'http://192.168.250.192:9097/',
       changeOrigin: true,
@@ -171,6 +176,7 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^/api': 'v1' },
     },
+
     /*'/management_platform/login': {
       target: "http://localhost:8080/",
       changeOrigin: true,

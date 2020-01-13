@@ -1,5 +1,5 @@
 // 导入官方包
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Col,
   Divider,
@@ -19,8 +19,8 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 
 // 导入自定义包
 import GoodsSpecsGenerator from '@/components/DynamicTableGenerator/GoodsSpecsGenerator';
-import InputBoard from "@/components/HoverInputBoard/InputBoard";
-import AddBoardBtn from "@/components/HoverInputBoard/AddBoardBtn";
+import InputBoard from '@/components/HoverInputBoard/InputBoard';
+import AddBoardBtn from '@/components/HoverInputBoard/AddBoardBtn';
 import '@/pages/goods-manage/static/AddSkuItem.less';
 
 function hasErrors(fieldsError) {
@@ -192,6 +192,8 @@ const SkuForm = props => {
     props.form.validateFields(); // 校验表单字段
   }, []);
 
+  const tableRef = useRef();
+
   const handleSubmit = ev => {
     ev.preventDefault();
     props.form.validateFields((err, values) => {
@@ -208,6 +210,8 @@ const SkuForm = props => {
           bottom_urls.push(item.url);
         });
         console.log(top_urls);
+        console.log('获取 sku_list ...');
+        console.log(props.addSku.sku_list);
         // 提交页面数据
         let data = {
           merchant_id: 1,
@@ -220,19 +224,19 @@ const SkuForm = props => {
         // 获取表单数据
 
         // 获取上传图片数据
-        const { getGoodsSpecsData } = require('../../../components/DynamicTableGenerator/utils');
+        // const { getGoodsSpecsData } = require('../../../components/DynamicTableGenerator/utils');
         // 获取商品规格数据
-        console.log(getGoodsSpecsData());
+        // console.log(getGoodsSpecsData());
 
-        let specs = getGoodsSpecsData();
-        for (let i = 0; i < specs.length; i++) {
+        // let specs = getGoodsSpecsData();
+        /*for (let i = 0; i < specs.length; i++) {
           data.sku_list.push({
             sku_url: specs[i].goods_pics,
             price: specs[i].goods_price,
             stock: Number(specs[i].goods_stock),
             spec_option_id_list: [2, 3],
           });
-        }
+        }*/
         console.log(JSON.stringify(data));
         console.log('Received values of form: ', values);
         // 提交数据
@@ -571,48 +575,47 @@ const SkuForm = props => {
           </Col>
         </Row>
       </Form>
-      <GoodsSpecsGenerator
+      {/*      <GoodsSpecsGenerator
         addSku={props.addSku}
         style={{
           paddingBottom: '50px',
         }}
-      />
-        {/*<div>
-             容器组件 ( 动态生成 )
-            {props.addSku.containers.map((item, index) => (
-                <InputBoard
-                    key={index}
-                    data-key={index}
-                    dataKey={index}
-                    board={props.addSku}
-                    onParentInputClick={props.onParentInputClick}
-                    onRemoveContainerClick={props.onRemoveContainerClick}
-                    onPutValToParentInputClick={props.onPutValToParentInputClick}
-                    onPutValToChildInputClick={props.onPutValToChildInputClick}
-                    onCheckInputNow={props.onCheckInputNow}
-                    onChildCheckInputNow={props.onChildCheckInputNow}
-                    onCheckChineseInputStart={props.onCheckChineseInputStart}
-                    onCheckChineseInputEnd={props.onCheckChineseInputEnd}
-                    onAddChildNodeClick={props.onAddChildNodeClick}
-                    onSwitchChildHoverBoardStatus={props.onSwitchChildHoverBoardStatus}
-                    onRemoveAfterNative_childNames={props.onRemoveAfterNative_childNames}
-                    onCancelChildHoverBoard={props.onCancelChildHoverBoard}
-                    onAddChildNamesToRealArea={props.onAddChildNamesToRealArea}
-                    onRemoveReal_childNames={props.onRemoveReal_childNames}
-                />
-            ))}
-             添加按钮组件
-            <AddBoardBtn onAddComponentClick={props.onAddComponentClick} />
-        
-            <Table
-                columns={props.addSku.columns}
-                dataSource={props.addSku.data}
-                size="middle"
-                pagination={false}
-            />
-        </div>*/}
-      
-      
+      />*/}
+
+      <div>
+        {/*容器组件 ( 动态生成 )*/}
+        {props.addSku.containers.map((item, index) => (
+          <InputBoard
+            key={index}
+            data-key={index}
+            dataKey={index}
+            board={props.addSku}
+            onParentInputClick={props.onParentInputClick}
+            onRemoveContainerClick={props.onRemoveContainerClick}
+            onPutValToParentInputClick={props.onPutValToParentInputClick}
+            onPutValToChildInputClick={props.onPutValToChildInputClick}
+            onCheckInputNow={props.onCheckInputNow}
+            onChildCheckInputNow={props.onChildCheckInputNow}
+            onCheckChineseInputStart={props.onCheckChineseInputStart}
+            onCheckChineseInputEnd={props.onCheckChineseInputEnd}
+            onAddChildNodeClick={props.onAddChildNodeClick}
+            onSwitchChildHoverBoardStatus={props.onSwitchChildHoverBoardStatus}
+            onRemoveAfterNative_childNames={props.onRemoveAfterNative_childNames}
+            onCancelChildHoverBoard={props.onCancelChildHoverBoard}
+            onAddChildNamesToRealArea={props.onAddChildNamesToRealArea}
+            onRemoveReal_childNames={props.onRemoveReal_childNames}
+          />
+        ))}
+        {/*添加按钮组件*/}
+        <AddBoardBtn ref={props.tableRef} onAddComponentClick={props.onAddComponentClick} />
+
+        <Table
+          columns={props.addSku.columns}
+          dataSource={props.addSku.data}
+          size="middle"
+          pagination={false}
+        />
+      </div>
     </div>
   );
 };
@@ -703,7 +706,6 @@ const AddSkuItem = props => {
                 isShowSkuClassModal={props.isShowSkuClassModal}
                 addSku={props.addSku}
                 normFileTopPic={props.normFileTopPic}
-
                 onParentInputClick={props.onParentInputClick}
                 onRemoveContainerClick={props.onRemoveContainerClick}
                 onPutValToParentInputClick={props.onPutValToParentInputClick}
@@ -719,6 +721,7 @@ const AddSkuItem = props => {
                 onAddChildNamesToRealArea={props.onAddChildNamesToRealArea}
                 onRemoveReal_childNames={props.onRemoveReal_childNames}
                 onAddComponentClick={props.onAddComponentClick}
+                tableRef={props.tableRef}
               />
             </Col>
           </Row>

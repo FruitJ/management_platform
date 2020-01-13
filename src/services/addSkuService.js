@@ -55,9 +55,8 @@ export async function reqGoodsCategoryService() {
 }
 
 export async function reqGoodsSpecsService(params) {
-  
-  return request("/api/backend/beanmall/third/goods/spec/option/all", {
-    method: "POST",
+  return request('/api/backend/beanmall/third/goods/spec/option/all', {
+    method: 'POST',
     body: JSON.stringify(params),
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
@@ -66,16 +65,14 @@ export async function reqGoodsSpecsService(params) {
 }
 
 export async function addSkuGoodsService(params) {
-  
-  return request("/api/backend/beanmall/third/goods/create", {
-    method: "POST",
+  return request('/api/backend/beanmall/third/goods/create', {
+    method: 'POST',
     body: JSON.stringify(params),
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
     },
   });
 }
-
 
 /*export async function addTopPicsUrlService(params) {
 	
@@ -127,5 +124,11 @@ export async function getNewChildNamesEleService(param) {
   });
 }
 
+export async function uploadPicService(params) {
+  console.log(params);
 
-
+  return request('/api/uploadPicService', {
+    method: 'POST',
+    body: params,
+  });
+}
