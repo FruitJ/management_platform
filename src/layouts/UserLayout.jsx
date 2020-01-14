@@ -39,15 +39,15 @@ const UserLayout = props => {
           <div className={styles.top}>
             <div className={styles.header}>
               <Link to="/">
-                <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>Ant Design</span>
+                {/*<img alt="logo" className={styles.logo} src={logo} />*/}
+                <span className={styles.title}>KG 三方商户管理平台</span>
               </Link>
             </div>
             <div className={styles.desc}>KG 是双桥区最具影响力的连锁超市龙头企业</div>
           </div>
           {children}
         </div>
-        <DefaultFooter />
+        {/*<DefaultFooter />*/}
       </div>
     </DocumentTitle>
   );

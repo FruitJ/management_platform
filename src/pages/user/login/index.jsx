@@ -7,10 +7,10 @@ import LoginComponents from './components/Login';
 import styles from './style.less';
 const { Tab, UserName, Password, Mobile, Captcha, Submit } = LoginComponents;
 
-@connect(({ login, loading }) => ({
+/*@connect(({ login, loading }) => ({
   userLogin: login,
-  submitting: loading.effects['login/login'],
-}))
+  // submitting: loading.effects['login/login'],
+}))*/
 class Login extends Component {
   loginForm = undefined;
   state = {
@@ -28,9 +28,13 @@ class Login extends Component {
     if (!err) {
       const { dispatch } = this.props;
       dispatch({
-        type: 'login/login',
-        payload: { ...values, type },
+        type: 'signIn/login',
+        payload: { data: values, type },
       });
+      
+      console.log("]- 分割线 -[");
+      console.log(values);
+      
     }
   };
   onTabChange = type => {
@@ -116,7 +120,7 @@ class Login extends Component {
               ]}
             />
             <Password
-              name="password"
+              name="userPwd"
               placeholder={`${formatMessage({
                 id: 'user-login.login.password',
               })}: ant.design`}
@@ -137,7 +141,7 @@ class Login extends Component {
               }}
             />
           </Tab>
-          <Tab
+          {/*<Tab
             key="mobile"
             tab={formatMessage({
               id: 'user-login.login.tab-login-mobile',
@@ -193,7 +197,7 @@ class Login extends Component {
                 },
               ]}
             />
-          </Tab>
+          </Tab>*/}
           <div>
             <Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>
               <FormattedMessage id="user-login.login.remember-me" />
@@ -210,7 +214,7 @@ class Login extends Component {
           <Submit loading={submitting}>
             <FormattedMessage id="user-login.login.login" />
           </Submit>
-          <div className={styles.other}>
+          {/*<div className={styles.other}>
             <FormattedMessage id="user-login.login.sign-in-with" />
             <Icon type="alipay-circle" className={styles.icon} theme="outlined" />
             <Icon type="taobao-circle" className={styles.icon} theme="outlined" />
@@ -218,11 +222,13 @@ class Login extends Component {
             <Link className={styles.register} to="/user/register">
               <FormattedMessage id="user-login.login.signup" />
             </Link>
-          </div>
+          </div>*/}
         </LoginComponents>
       </div>
     );
   }
 }
 
-export default Login;
+export default connect(({ signIn }) =>({
+  userLogin: signIn,
+}))(Login);

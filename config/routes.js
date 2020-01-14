@@ -7,10 +7,12 @@ export const routes = [
   },
   {
     path: '/user',
+    component: "../layouts/UserLayout",
     routes: [
       {
+        name: 'login',
         path: '/user/login',
-        component: '../pages/consumer/LoginRouter',
+        component: './user/login',
       },
       {
         path: '/user/register',
@@ -22,6 +24,23 @@ export const routes = [
       },
     ],
   },
+  /*{
+    path: '/user',
+    routes: [
+      /!*{
+        path: '/user/login',
+        component: '../pages/consumer/LoginRouter',
+      },*!/
+      {
+        path: '/user/register',
+        component: '../pages/consumer/RegisterRouter',
+      },
+      {
+        path: '/user/forgetPassword',
+        component: '../pages/consumer/ForgetPasswordRouter',
+      },
+    ],
+  },*/
   {
     path: '/',
     component: '../layouts/SecurityLayout',
@@ -72,6 +91,7 @@ export const routes = [
                 // name: 'details',
                 component: '../pages/goods-manage/SpuDetailsRouter',
               },
+              
             ],
           },
           {

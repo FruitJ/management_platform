@@ -86,6 +86,7 @@ export async function addSkuGoodsService(params) {
 }*/
 
 export async function loadParentNodeDataService() {
+  console.log("到这了");
   return request('/api/loadParentNodeDataService', {
     method: 'POST',
     headers: {
@@ -132,3 +133,5 @@ export async function uploadPicService(params) {
     body: params,
   });
 }
+
+

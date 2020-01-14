@@ -25,7 +25,11 @@ const InputBoard = props => {
 
   const handleAddChildNodeClick = () => {
     proxy_obj = props.board.containers[props.dataKey];
-
+  
+    console.log("///");
+    console.log(props.dataKey);
+    console.log(props.board.containers);
+    console.log(proxy_obj);
     id = Number(proxy_obj.parentInputId);
     if (Number.isNaN(id)) {
       id = proxy_obj.parentNames[proxy_obj.parentNames.length - 1].parent_id;
@@ -89,7 +93,6 @@ const InputBoard = props => {
             {' '}
           </span>
 
-          {proxy_obj.isSureParentNamesEle ? (
             <>
               {proxy_obj.real_childNames.length !== 0
                 ? proxy_obj.real_childNames.map((item, index) => (
@@ -241,7 +244,6 @@ const InputBoard = props => {
                 </div>
               </div>
             </>
-          ) : null}
         </div>
         <HoverInputBoard
           list={proxy_obj.parentNames}

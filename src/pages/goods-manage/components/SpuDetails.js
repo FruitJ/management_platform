@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { Divider, Form, Icon, Input, PageHeader, Row, Col, Upload, Modal, Button } from 'antd';
+import {Divider, Form, Icon, Input, PageHeader, Row, Col, Upload, Modal, Button, Table} from 'antd';
+import InputBoard from "@/components/HoverInputBoard/InputBoard";
+import AddBoardBtn from "@/components/HoverInputBoard/AddBoardBtn";
 
 const routes = [
   {
@@ -44,6 +46,11 @@ const SpuDetailsForm = props => {
     console.log(props.spuDetails.spuDetailsInfo);
   };
 
+  const handleSubmit = () => {
+      
+      props.onSubmit();
+  };
+  
   return (
     <div>
       <PageHeader
@@ -66,7 +73,7 @@ const SpuDetailsForm = props => {
       >
         <div className="basic-info">
           <Divider orientation="left">基本信息</Divider>
-          <Form layout="horizontal">
+          <Form layout="horizontal" className = "form-spuDetails">
             <Row>
               <Col span={9} offset={2}>
                 <Form.Item
@@ -138,18 +145,56 @@ const SpuDetailsForm = props => {
                   )}
                 </Form.Item>
               </Col>
-              {/*<Col>
-							
-							</Col>*/}
             </Row>
           </Form>
         </div>
         <div className="specs-info">
           <Divider orientation="left">规格信息</Divider>
-          <Button type="primary" onClick={handleClick}>
-            点我啊
-          </Button>
+            <div>
+                {/*容器组件 ( 动态生成 )*/}
+                {props.spuDetails.containers.map((item, index) => (
+                    <InputBoard
+                        key={index}
+                        data-key={index}
+                        dataKey={index}
+                        board={props.spuDetails}
+                        onParentInputClick={props.onParentInputClick}
+                        onRemoveContainerClick={props.onRemoveContainerClick}
+                        onPutValToParentInputClick={props.onPutValToParentInputClick}
+                        onPutValToChildInputClick={props.onPutValToChildInputClick}
+                        onCheckInputNow={props.onCheckInputNow}
+                        onChildCheckInputNow={props.onChildCheckInputNow}
+                        onCheckChineseInputStart={props.onCheckChineseInputStart}
+                        onCheckChineseInputEnd={props.onCheckChineseInputEnd}
+                        onAddChildNodeClick={props.onAddChildNodeClick}
+                        onSwitchChildHoverBoardStatus={props.onSwitchChildHoverBoardStatus}
+                        onRemoveAfterNative_childNames={props.onRemoveAfterNative_childNames}
+                        onCancelChildHoverBoard={props.onCancelChildHoverBoard}
+                        onAddChildNamesToRealArea={props.onAddChildNamesToRealArea}
+                        onRemoveReal_childNames={props.onRemoveReal_childNames}
+                    />
+                ))}
+                {/*添加按钮组件*/}
+                <AddBoardBtn ref={props.tableRef} onAddComponentClick={props.onAddComponentClick} />
+        
+                <Table
+                    columns={props.spuDetails.columns}
+                    dataSource={props.spuDetails.data}
+                    size="middle"
+                    pagination={false}
+                />
+            </div>
         </div>
+        <div style={{
+            position: "relative",
+            left: "50%",
+            marginLeft: "-32px",
+            marginTop: "20px",
+            paddingBottom: "20px",
+        }}>
+            <Button type="primary" onClick = { handleSubmit }>提交</Button>
+        </div>
+        
       </div>
     </div>
   );

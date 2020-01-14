@@ -27,7 +27,8 @@ const list = Mock.mock('/api/login/account', 'POST', option => {
 module.exports = {
   /* 拦截登录请求并返回模拟数据 */
   ['POST /api/login/account'](req, res) {
-    const { userPwd, userName, type } = req.body;
+    const { userPwd, userName } = req.body.data;
+    const { type } = req.body;
     console.log(`userPwd: ${userPwd}; userName: ${userName}; type: ${type}`);
     if (userPwd === 'ant.design' && userName === 'admin') {
       res.send({

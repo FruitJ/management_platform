@@ -13,6 +13,9 @@ import qs from 'qs';
 }*/
 export async function login(params) {
   // 登录
+  
+  console.log("&*&");
+  console.log(params);
   return request('/api/login/account', {
     method: 'POST',
     body: qs.stringify(params),

@@ -780,10 +780,15 @@ export default {
     },
     // 将待选区域的数据集合添加到真实展示区域
     _realAddChildEle(state, { payload: param }) {
+      
+      
+  
       let tbody = param.table.querySelectorAll('tbody')[0];
       console.log('*&* 分割线 *&*');
       console.log(param.table);
       setTimeout(() => {
+        console.log("zero");
+        console.log(state.board_data);
         // 使用定时器的原因是表格生成的时机比获取行为慢，导致获取失败
         // ( 为每个最后含有 file 类型的 input 设置 data-key 属性 )
 
@@ -1174,6 +1179,8 @@ export default {
 
       // 根据删除小标签动态删除表格
       // 格式化表格数据
+      console.log("呼啦啦");
+      console.log(state.board_data);
       let res = formatData(state.board_data);
 
       // 配置显示表格数据需要的数据源

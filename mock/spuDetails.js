@@ -1,7 +1,7 @@
 
 module.exports = {
 
-	["POST /api/reqSpuDetailsInfoService"](req, res) {
+	/*["POST /api/reqSpuDetailsInfoService"](req, res) {
 	
 		console.log("_=_");
 		console.log(req.body);
@@ -59,5 +59,5 @@ module.exports = {
 			],
 		};
 		return res.status(200).json(data);
-	},
+	},*/
 };

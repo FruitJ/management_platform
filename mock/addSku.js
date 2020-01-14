@@ -168,6 +168,107 @@ let childDataSource = [
   },
 ];
 
+let data = {
+  spu_name: "Oppo R17",
+  spu_barCode: "1a1a1a11a11a11a1a11a1",
+  top_urls: ["https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"],
+  bottom_urls: ["https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"],
+  specs: [
+    {
+      spec_id: 1,
+      spec_name: "颜色",
+      spec_option: [
+        {
+          name: "红色",
+          id: 1,
+        },
+        {
+          name: "紫色",
+          id: 3,
+        }
+      ],
+    },
+    {
+      spec_id: 2,
+      spec_name: "尺寸",
+      spec_option: [
+        {
+          name: "32 寸",
+          id: 4,
+        },
+        {
+          name: "56 寸",
+          id: 5,
+        }
+      ],
+    },
+    {
+      spec_id: 3,
+      spec_name: "版本",
+      spec_option: [
+        {
+          name: "7.0",
+          id: 7,
+        },
+        {
+          name: "8.0",
+          id: 8,
+        }
+      ],
+    },
+  ],
+  common: [
+    {
+      price: "1",
+      stock: "12",
+      sku_url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      specs_id_arr: [1, 4, 7],
+    },
+    {
+      price: "2",
+      stock: "22",
+      sku_url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      specs_id_arr: [1, 4, 8],
+    },
+    {
+      price: "3",
+      stock: "32",
+      sku_url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      specs_id_arr: [1, 5, 7],
+    },
+    {
+      price: "4",
+      stock: "42",
+      sku_url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      specs_id_arr: [1, 5, 8],
+    },
+    {
+      price: "5",
+      stock: "52",
+      sku_url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      specs_id_arr: [3, 4, 7],
+    },
+    {
+      price: "6",
+      stock: "62",
+      sku_url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      specs_id_arr: [3, 4, 8],
+    },
+    {
+      price: "7",
+      stock: "72",
+      sku_url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      specs_id_arr: [3, 5, 7],
+    },
+    {
+      price: "8",
+      stock: "82",
+      sku_url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+      specs_id_arr: [3, 5, 8],
+    },
+  ],
+};
+
 let count = dataSource.length;
 let num = childDataSource.length;
 
@@ -212,7 +313,6 @@ module.exports = {
 		category.push(temp);
 		return res.status(200).json(category);
 	},*/
-  
   
   ['POST /api/loadParentNodeDataService'](req, res) {
     res.status(200).json(dataSource);
@@ -280,6 +380,11 @@ module.exports = {
     console.log(newElements);
     // console.log(Array.from(req.body));
     res.status(200).json(newElements);
+  },
+  
+  ['POST /api/reqSpuDetailsInfoService'] (req, res) {
+    
+    res.status(200).json(data);
   },
   
 };
