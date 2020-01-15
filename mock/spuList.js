@@ -167,17 +167,6 @@ module.exports = {
   ['POST /api/index/spuList'](req, res) {
     return res.status(200).json(list);
   },
-  /*['POST /api/updateSpuContent'](req, res) {
-    let data = {
-    	list: []
-    };
-    if(Number(req.body.spu_id) !== 0) {
-	    data.list = list.spuList.filter((item, index) => item.spu_id === req.body.spu_id);
-    }else {
-	    data.list = list.spuList.slice(0, list.spuList.length);
-    }
-    return data;
-  },*/
   ['POST /api/spuList/get'](req, res) {
     let data = {
       spuList: [],
@@ -255,7 +244,6 @@ module.exports = {
     ]);
   },
   ['POST /api/selectClassesUpdateSpu'](req, res) {
-    console.log(req.body);
 
     return res.status(200).json('1');
   },

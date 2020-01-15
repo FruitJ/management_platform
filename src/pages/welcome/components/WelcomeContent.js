@@ -11,7 +11,6 @@ import './WelcomeContent.less';
  * @Description: 内容组件 - 欢迎页
  */
 const WelcomeContent = ({ onChangeLogoStyle, welcome }) => {
-  console.log(welcome.list.app_content_title);
 
   return (
     <div

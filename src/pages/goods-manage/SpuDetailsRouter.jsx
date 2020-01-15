@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import spu from '@/pages/goods-manage/models/spu';
 import SpuDetails from './components/SpuDetails';
 import {message} from "antd";
+import AddSkuItem from "@/pages/goods-manage/components/AddSkuItem";
 
 let dispatch = null;
 let count = 0;
@@ -15,10 +16,7 @@ class SpuDetailsRouter extends Component {
     this.tableRef = React.createRef();
   }
   handleTableUploadPics = info => {
-    // alert(";;");
     if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-      console.log('|||||');
       dispatch({
         type: 'spuDetails/tableUploadPic',
         payload: {
@@ -34,21 +32,9 @@ class SpuDetailsRouter extends Component {
     }
   };
   componentDidMount() {
-    alert("sasasasasasasasasasa");
-    // console.log(this.props.match.params.spu_id);
-    /*let str = this.props.match.params.spu_id;
-        const spu_id = Number(str.replace(":", ""));
-        // 重新请求数据
-        this.props.dispatch({
-            type: "spuDetails/getSpuDetailInfo",
-            payload: spu_id,
-        });*/
 
     // 从 localStorage 中获取当前的 spu id
-    console.log(localStorage.getItem('current_spu_id'));
     let spu_id = JSON.parse(localStorage.getItem('current_spu_id'));
-    console.log('--- 分割线* ---');
-    console.log(spu_id);
     
     // 请求 token
     dispatch({
@@ -70,17 +56,11 @@ class SpuDetailsRouter extends Component {
     let tab_upload_btns = this.tableRef.current.nextElementSibling
         .querySelectorAll('table')[0]
         .querySelectorAll('.tab-upload-btn');
-    console.log("get all table's upload's btn.");
-    console.log(tab_upload_btns);
     for (let i = 0; i < tab_upload_btns.length; i++) {
       tab_upload_btns[i].addEventListener(
           'click',
           function(ev) {
-            console.log('_______)()()_____----------__________+++++++');
-            console.log(ev.target);
-            // alert('获取 key');
             let btn = ev.target;
-            console.log(Number(btn.dataset.rowKey));
             dispatch({
               type: 'spuDetails/_getCurrentUploadKey',
               payload: {
@@ -95,11 +75,8 @@ class SpuDetailsRouter extends Component {
     
       setTimeout(() => {
         
-        console.log("户户户户户户户");
         const { spuDetailsInfo } = this.props.spuDetails;
         spuDetailsInfo_copy = spuDetailsInfo;
-        console.log(this.props.spuDetails);
-        console.log(spuDetailsInfo);
         let table = this.tableRef.current.nextElementSibling.querySelectorAll('table')[0];
         spuDetailsInfo.specs.forEach((item, index) => {{
           this.props.dispatch({
@@ -118,13 +95,7 @@ class SpuDetailsRouter extends Component {
         let tds_price = table.querySelectorAll(".input-price");
         let tds_stock = table.querySelectorAll(".input-stock");
         let tds_pics = table.querySelectorAll(".input-pics");
-        console.log("获取 tds");
-        console.log(table);
-        console.log(tds_price);
-        console.log(tds_stock);
-        console.log(tds_pics);
         const { common } = spuDetailsInfo;
-        console.log(common);
         
         common.forEach((item, index) => {
   
@@ -132,12 +103,6 @@ class SpuDetailsRouter extends Component {
           tds_stock[index].querySelectorAll("input")[0].value = Number(item.stock);
           tds_pics[index].src = item.sku_url;
         });
-  
-  
-  
-
-        
-        
         
       }, 900);
   
@@ -149,20 +114,11 @@ class SpuDetailsRouter extends Component {
     
     
     setTimeout(() => {
-      console.log("**********************************");
-      console.log(prevProps, prevState);
       let table = this.tableRef.current.nextElementSibling.querySelectorAll('table')[0];
       let tds_price = table.querySelectorAll(".input-price");
       let tds_stock = table.querySelectorAll(".input-stock");
       let tds_pics = table.querySelectorAll(".input-pics");
-      console.log("获取 tds");
-      console.log(table);
-      console.log(tds_price);
-      console.log(tds_stock);
-      console.log(tds_pics);
-      // const { spuDetailsInfo } = prevProps.spuDetails;
       const { common } = spuDetailsInfo_copy;
-      console.log(common);
   
       common.forEach((item, index) => {
     
@@ -203,12 +159,10 @@ class SpuDetailsRouter extends Component {
   handlePutValToParentInputClick = (parent_name, parent_id, dataKey) => {
     // 判断 parentNames 中的第一个元素是否是临时添加的
     
-    alert(parent_id);
     
     const { parentNames } = this.props.spuDetails.containers[dataKey];
     
     if (parentNames[0].temp !== undefined && Number.isNaN(Number(parentNames[0].parent_id))) {
-      alert(`: ${id}`);
       // 发送当前元素值
       dispatch({
         type: 'spuDetails/getNewParentNamesEle',
@@ -235,8 +189,6 @@ class SpuDetailsRouter extends Component {
   
   handleAddChildNodeClick = (dataKey, id, prop) => {
     
-    console.log("....");
-    console.log(dataKey, id, prop);
     // 加载对应子节点数据
     dispatch({
       type: 'spuDetails/loadChildNodeData',
@@ -248,7 +200,6 @@ class SpuDetailsRouter extends Component {
       },
     });
     
-    // const { parentNames } = this.props.addSku.containers[dataKey];
   };
   
   handlePutValToChildInputClick = (child_name, child_id, dataKey, parent_id, prop) => {
@@ -334,17 +285,11 @@ class SpuDetailsRouter extends Component {
       let tab_upload_btns = this.tableRef.current.nextElementSibling
           .querySelectorAll('table')[0]
           .querySelectorAll('.tab-upload-btn');
-      console.log("get all table's upload's btn.");
-      console.log(tab_upload_btns);
       for (let i = 0; i < tab_upload_btns.length; i++) {
         tab_upload_btns[i].addEventListener(
             'click',
             function(ev) {
-              console.log('___________________----------__________+++++++');
-              console.log(ev.target);
-              alert('获取 key');
               let btn = ev.target;
-              console.log(Number(btn.dataset.rowKey));
               dispatch({
                 type: 'spuDetails/_getCurrentUploadKey',
                 payload: {
@@ -395,9 +340,6 @@ class SpuDetailsRouter extends Component {
     
     // 获取数据
     let form = document.querySelectorAll(".form-spuDetails")[0];
-    console.log("form ...");
-    console.log(form);
-    console.log(form.querySelectorAll("input"));
     let inputs = form.querySelectorAll("input");
     
     let data = {
@@ -408,12 +350,8 @@ class SpuDetailsRouter extends Component {
       sku_list: [],
     };
   
-    console.log("sudo");
-    console.log(data);
-    console.log(this.props.spuDetails.board_data);
     
     let temp_arr = this.props.spuDetails.board_data.filter((item, index) => item.temp === undefined);
-    console.log(temp_arr);
     let sku_list = [];
     if (temp_arr.length > 1 && temp_arr.length <= 2) {
       // 两次循环
@@ -461,13 +399,46 @@ class SpuDetailsRouter extends Component {
     });
     
     
+    let dataSource = [];
+    // 合成数据
+    for(let i = 0; i < sku_list.length; i++) {
+      dataSource.push({
+        price: price[i],
+        stock: stock[i],
+        url: this.props.spuDetails.currentUploadPics[i] === undefined ? "" : this.props.spuDetails.currentUploadPics[i],
+        sku_specs_option_id: sku_list[i],
+      });
+    }
+    data.sku_list = dataSource;
     
-    console.log("OPOOPO");
-    console.log(sku_list);
-    console.log(this.props.spuDetails.currentUploadPics);
-    console.log(price);
-    console.log(stock);
+    // 提交页面数据
+    dispatch({
+      type: "spuDetails/submitSpuDetailsData",
+      payload: data,
+    });
+    
+  };
   
+  handleChildCheckInputNow = (val, key) => {
+    dispatch({
+      type: 'spuDetails/_bindChildHoverInput',
+      payload: {
+        value: val,
+        key,
+      },
+    });
+  };
+  // 检测中文输入
+  handleCheckChineseInputStart = () => {
+    dispatch({
+      type: 'spuDetails/_checkChineseInputStart',
+    });
+  };
+  
+  handleCheckChineseInputEnd = () => {
+    dispatch({
+      type: 'spuDetails/_checkChineseInputEnd',
+    });
   };
   
   render() {
@@ -487,6 +458,9 @@ class SpuDetailsRouter extends Component {
           onSwitchChildHoverBoardStatus = { this.handleSwitchChildHoverBoardStatus }
           onAddChildNamesToRealArea = { this.handleAddChildNamesToRealArea }
           onRemoveReal_childNames = { this.handleRemoveReal_childNames }
+          onChildCheckInputNow={this.handleChildCheckInputNow}
+          onCheckChineseInputStart={this.handleCheckChineseInputStart}
+          onCheckChineseInputEnd={this.handleCheckChineseInputEnd}
           onCancelChildHoverBoard = { this.handleCancelChildHoverBoard }
           onRemoveAfterNative_childNames = { this.handleRemoveAfterNative_childNames }
           onSubmit = { this.handleSubmit }

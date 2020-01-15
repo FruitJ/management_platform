@@ -24,8 +24,6 @@ export default {
   effects: {
     *reqGoodsCategory( {  }, { call, put } ) {
       let res = yield call(reqGoodsCategoryService);
-      console.log("--- 分割线 ---");
-      console.log(res.data.category_list);
       yield put({
         type: "_saveCategoryData",
         payload: res.data.category_list
@@ -34,14 +32,9 @@ export default {
     *createChildCategory( { payload: param }, { call, put } ) {
       
       // 发送请求
-      console.log("发送请求之前");
-      console.log(param.data.pid, typeof param.data.pid);
       let res = yield call(createNewCategoryService, param.data);
-      console.log("…………………………………………………………");
-      console.log(res);
         // 重新获取商品分类列表数据
         let list = yield call(reqGoodsCategoryService);
-        console.log(list);
         yield put({
           type: "_saveCategoryData",
           payload: list.data.category_list
@@ -60,7 +53,6 @@ export default {
       
       // 发送请求
       let res = yield call(editCategoryService, param.data);
-      console.log(res);
       // 重新获取商品分类列表数据
       let list = yield call(reqGoodsCategoryService);
       
@@ -79,13 +71,9 @@ export default {
       
       // 发送请求
       let res = yield call(createNewCategoryService, param);
-      console.log("_+_ 分割线 _+_");
-      console.log(res);
-      console.log("+_+ 分割线 +_+");
       
       // 重新请求商品分类列表数据
       let list = yield call(reqGoodsCategoryService);
-      console.log(list);
       // 更新状态
   
       yield put({
@@ -103,8 +91,6 @@ export default {
       
       // 发送请求
       let res = yield call(deleteCategoryService, data);
-      console.log("--%% 分割线 %%--");
-      console.log(res);
       // 重新请求商品列表数据
       
       // 更新状态
@@ -163,7 +149,6 @@ export default {
     },
     '_changeAddCategoryVal'( state, { payload: val } ) {
       
-      console.log(val);
       state.input_addCategoryVal = val;
       return { ...state };
     },

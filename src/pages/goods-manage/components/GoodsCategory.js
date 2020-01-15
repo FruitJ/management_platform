@@ -172,29 +172,13 @@ class GoodsCategory extends Component {
     super(props);
   }
 
-  /*    useEffect(() => {
-			// console.log("sasasa");
-			// console.log(btnRef);
-			
-			let a = document.querySelectorAll(".a");
-			console.log(a);
-			console.log("-- --__");
-			
-		}, []);*/
 
   componentDidMount() {
-    // console.log(123);
-    // console.log(document.querySelectorAll(".a"));
-    //
   }
 
   onSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info);
     const { target: tar } = info.nativeEvent;
     if (Array.from(tar.classList).includes('category-addChild')) {
-      console.log('分割线12');
-      console.log(this.props.goodsCategory.isShowAddChildCategoryModel);
-      console.log(this.props.isShowAddChildCategory);
       this.props.onShowAddCategoryModal();
       if (this.props.goodsCategory.isShowAddChildCategoryModel) {
         if (!this.props.isShowAddChildCategory) {
@@ -204,14 +188,9 @@ class GoodsCategory extends Component {
         }
       }
 
-      console.log(Number(selectedKeys[0]) + 'apple');
     } else if (Array.from(tar.classList).includes('category-edit')) {
-      console.log('--------------------------------');
-      console.log(tar);
       // 打开弹框
       this.props.onShowEditCategoryModal();
-      // console.log(info.node.selectHandle.parentNode.parentNode.parentNode.children[1].firstChild.firstChild.firstChild.firstChild);
-      // let parentText = "";
       try {
         parentText =
           info.node.selectHandle.parentNode.parentNode.parentNode.children[1].firstChild.firstChild
@@ -223,14 +202,11 @@ class GoodsCategory extends Component {
 
       if (this.props.goodsCategory.isShowEditCategoryModel) {
         if (!this.props.isShowEditGoodsCategory) {
-          console.log(Number(selectedKeys[0]) + 'ndfs');
           currentId = Number(selectedKeys[0]);
           this.props.onChangeTagEditCategoryStatus(true);
-          // this.props.isShowAddChildCategory = true;
         }
       }
 
-      console.log(parentText);
       // onDelCategory
     } else if (Array.from(tar.classList).includes('category-remove')) {
       this.props.onShowDelCategoryModal();

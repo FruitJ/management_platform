@@ -11,8 +11,6 @@ const GoodsCategoryRouter = ({ dispatch, goodsCategory }) => {
   // class GoodsCategoryRouter extends Component {
   const addChildCategoryRef = React.createRef();
   useEffect(() => {
-    console.log('分割线');
-    console.log(goodsCategory);
 
     // 获取商品类别列表
     dispatch({
@@ -21,9 +19,6 @@ const GoodsCategoryRouter = ({ dispatch, goodsCategory }) => {
   }, []);
 
   const handleShowAddCategoryModal = ev => {
-    console.log('--*( 分割线 )*--');
-    console.log(ev);
-    console.log('--*( 分割线 )*--');
 
     // 显示新建子分类的 Model
     dispatch({
@@ -42,10 +37,6 @@ const GoodsCategoryRouter = ({ dispatch, goodsCategory }) => {
   };
 
   const handleAddChildCategoryModalOk = (ev, parentId) => {
-    console.log('分割线,,,');
-    console.log(ev);
-    // console.log(addChildCategoryRef.current.state.value);
-    // const { value: val } = addChildCategoryRef.current.state;
     isShowAddChildCategory = false;
     // 更新状态 提交数据
     dispatch({
@@ -72,7 +63,6 @@ const GoodsCategoryRouter = ({ dispatch, goodsCategory }) => {
     isShowDelGoodsCategory = val;
   };
   const handleChangeAddChildCategoryVal = ev => {
-    console.log(ev.target.value);
     dispatch({
       type: 'goodsCategory/_changeAddChildCategoryVal',
       payload: ev.target.value,
@@ -80,8 +70,6 @@ const GoodsCategoryRouter = ({ dispatch, goodsCategory }) => {
   };
 
   const handleChangeEditCategoryVal = ev => {
-    console.log('--- --- ---');
-    console.log(ev.target.value);
     //更新表单状态
     dispatch({
       type: 'goodsCategory/_changeEditCategoryVal',
@@ -90,7 +78,6 @@ const GoodsCategoryRouter = ({ dispatch, goodsCategory }) => {
   };
 
   const handleChangeAddCategoryVal = ev => {
-    console.log(ev.target.value);
 
     // 同步用户输入内容
     dispatch({
@@ -126,10 +113,6 @@ const GoodsCategoryRouter = ({ dispatch, goodsCategory }) => {
   };
 
   const handleEditCategoryModalOk = val => {
-    console.log('--^ 分割线 ^--');
-    console.log(val);
-    console.log(goodsCategory.input_editCategoryVal);
-    console.log('--^ 分割线 ^--');
 
     dispatch({
       type: 'goodsCategory/editCategory',
@@ -155,7 +138,6 @@ const GoodsCategoryRouter = ({ dispatch, goodsCategory }) => {
   };
 
   const handleDelCategoryModalOk = currentId => {
-    console.log(currentId);
 
     // 删除分类
     dispatch({
@@ -175,8 +157,6 @@ const GoodsCategoryRouter = ({ dispatch, goodsCategory }) => {
 
   const handleDelCategory = index => {
     // 删除当前选中分类
-    console.log('%……%');
-    console.log(`index: ${index}`);
   };
 
   return (

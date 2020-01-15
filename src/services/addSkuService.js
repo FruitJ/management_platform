@@ -74,19 +74,8 @@ export async function addSkuGoodsService(params) {
   });
 }
 
-/*export async function addTopPicsUrlService(params) {
-	
-	return request("/api/addTopPicsUrlService", {
-		method: "POST",
-		body: qs.stringify(params),
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded'
-		}
-	});
-}*/
 
 export async function loadParentNodeDataService() {
-  console.log("到这了");
   return request('/api/loadParentNodeDataService', {
     method: 'POST',
     headers: {
@@ -126,7 +115,6 @@ export async function getNewChildNamesEleService(param) {
 }
 
 export async function uploadPicService(params) {
-  console.log(params);
 
   return request('/api/uploadPicService', {
     method: 'POST',

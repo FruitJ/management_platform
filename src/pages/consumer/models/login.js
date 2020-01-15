@@ -30,19 +30,14 @@ export default {
     },
     *login({ payload: data }, { call, put }) {
       // 提交数据
-      console.log('--- +++ ---');
-      console.log(data);
       // 判断当前登录方式，对密码进行 md5 摘要
       data.userName !== undefined ? (data.userPwd = md5(data.userPwd)) : null;
       let res = yield call(login, data);
-      console.log('咕噜咕噜咕噜');
-      console.log(res);
       // 调用 _login 函数来更新状态
       yield put({
         type: '_login',
         payload: res,
       });
-      console.log(res.status);
 
       // 跳转到主界面
       yield put(routerRedux.push('/home'));
@@ -72,13 +67,9 @@ export default {
     },
     _login(state, { payload }) {
       state.userStatus = payload;
-      console.log('&&&&');
-      console.log(payload);
       // 设置用户登录权限
       setAuthority(payload.currentAuthority);
       // 设置当前登录用户
-      console.log('啦啦啦啦啦');
-      console.log(payload.user);
       setCurrentUser(payload.user);
       return { ...state, status: payload.status, type: payload.type };
     },

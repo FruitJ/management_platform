@@ -10,13 +10,9 @@ let count = 0;
 let dispatch = null;
 let id = 0;
 class SkuAddRouter extends Component {
-  // const SkuAddRouter = ( { dispatch, addSku } ) => {
-  // class SkuAddRouter extends Component {
 
   constructor(props) {
     super(props);
-    console.log('SkuAddRouter ...');
-    console.log(props);
     dispatch = this.props.dispatch;
     this.tableRef = React.createRef();
   }
@@ -39,7 +35,6 @@ class SkuAddRouter extends Component {
 
   handleSubmitSkuForm = val => {
     // 提交新创建的商品分类
-    console.log(val);
 
     dispatch({
       type: 'addSku/createNewCategory',
@@ -108,7 +103,6 @@ class SkuAddRouter extends Component {
     dispatch({
       type: 'addSku/_bottomCancelPic',
     });
-    // this.setState({ previewVisible: false })
   };
 
   // 移除顶部上传的商品图片
@@ -155,33 +149,9 @@ class SkuAddRouter extends Component {
   };
 
   handleChangeTopSkuPic = ({ file }) => {
-    console.log('啦啦啦');
-    console.log(file);
-    console.log('呃呃呃');
   };
 
   handleCustomTopUpload = option => {
-    /*let formData = new window.FormData();
-        formData.append("file", option.file);
-        formData.append("token", this.props.addSku.token.token);
-        axios({
-            url: 'https://up-z1.qiniup.com',
-            data: formData,
-            method: 'POST',
-        }).then((res) => {
-            
-            // 更新图片列表数据
-            dispatch({
-                type: "addSku/_updateTopPicsList",
-                payload: res.data.key
-            });
-            
-            console.log(res);
-        })
-        .catch((err) => {
-            console.error(err.message);
-        })
-        ;*/
     dispatch({
       type: 'addSku/uploadTopPic',
       payload: {
@@ -191,8 +161,6 @@ class SkuAddRouter extends Component {
     });
   };
   handleCustomBottomUpload = option => {
-    console.warn('%^%');
-    console.log(option);
 
     dispatch({
       type: 'addSku/uploadBottomPic',
@@ -219,15 +187,11 @@ class SkuAddRouter extends Component {
   };
 
   handleSelectCategory = (value, selectedOption) => {
-    console.log('-- 分割线 --');
-    console.log(value);
-    console.log(selectedOption);
     dispatch({
       type: 'addSku/_saveSelectedCategoryId',
       payload: Number(selectedOption[selectedOption.length - 1].key),
     });
 
-    console.log('-- 分割线 --');
   };
 
   handleReqGoodsSpecs = () => {
@@ -252,11 +216,8 @@ class SkuAddRouter extends Component {
       },
     });
 
-    console.log('___________________________哈哈哈');
 
     data.sku_list = this.props.addSku.sku_list;
-    console.log(this.props.addSku.sku_list);
-    console.log(data);
     // 将数据提交到后台
     dispatch({
       type: 'addSku/addSkuGoods',
@@ -265,7 +226,6 @@ class SkuAddRouter extends Component {
   };
 
   normFileTopPic = ev => {
-    console.log('Upload event:', ev);
     if (Array.isArray(ev)) {
       return ev;
     }
@@ -322,20 +282,16 @@ class SkuAddRouter extends Component {
   handlePutValToParentInputClick = (parent_name, parent_id, dataKey) => {
     // 判断 parentNames 中的第一个元素是否是临时添加的
 
-    alert(parent_id);
 
     const { parentNames } = this.props.addSku.containers[dataKey];
 
     if (parentNames[0].temp !== undefined && Number.isNaN(Number(parentNames[0].parent_id))) {
-      alert(`: ${id}`);
       // 发送当前元素值
       dispatch({
         type: 'addSku/getNewParentNamesEle',
         payload: {
           parent_name: parentNames[0].parent_name,
           key: dataKey,
-          // parentName: parent_name,
-          // parent_id: id,
         },
       });
       id = 0;
@@ -459,8 +415,6 @@ class SkuAddRouter extends Component {
 
   handleTableUploadPics = info => {
     if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-      console.log('|||||');
       dispatch({
         type: 'addSku/tableUploadPic',
         payload: {
@@ -523,17 +477,11 @@ class SkuAddRouter extends Component {
       let tab_upload_btns = this.tableRef.current.nextElementSibling
         .querySelectorAll('table')[0]
         .querySelectorAll('.tab-upload-btn');
-      console.log("get all table's upload's btn.");
-      console.log(tab_upload_btns);
       for (let i = 0; i < tab_upload_btns.length; i++) {
         tab_upload_btns[i].addEventListener(
           'click',
           function(ev) {
-            console.log('___________________----------__________+++++++');
-            console.log(ev.target);
-            alert('获取 key');
             let btn = ev.target;
-            console.log(Number(btn.dataset.rowKey));
             dispatch({
               type: 'addSku/_getCurrentUploadKey',
               payload: {

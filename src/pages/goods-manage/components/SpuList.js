@@ -42,7 +42,6 @@ const SpuListComponent = props => {
   const log = ev => {
     ev.preventDefault();
     // 清空当前 spu 标签 与 spu 下拉框的内容, 同时更新 spu 列表数据
-    console.log(ev);
   };
 
   const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;

@@ -14,26 +14,18 @@ const routes = [
   },
 ];
 
-// const SpuDetailsForm = ({ props }) => {
 const SpuDetailsForm = props => {
-  // class SpuDetails extends Component {
 
   useEffect(() => {
-    console.log(props);
 
-    // 解析路径参数
-    // const spu_id = Number(props.urlParam.replace(":", ""));
-    // props.handleReReqSpuDetailsInfo(spu_id);
   }, []);
 
   const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = props.form;
 
-  // Only show error after a field is touched.
   const spuBarCodeError = isFieldTouched('spuBarCode') && getFieldError('spuBarCode');
   const goodsNameError = isFieldTouched('goodsName') && getFieldError('goodsName');
   const goodsPicsError = isFieldTouched('goodsPics') && getFieldError('goodsPics');
 
-  // const { previewVisible, previewImage, fileList } = this.state;
   const uploadButton = (
     <div>
       <Icon type="plus" />
@@ -41,10 +33,6 @@ const SpuDetailsForm = props => {
     </div>
   );
 
-  const handleClick = () => {
-    console.log('分割线');
-    console.log(props.spuDetails.spuDetailsInfo);
-  };
 
   const handleSubmit = () => {
       
@@ -88,7 +76,6 @@ const SpuDetailsForm = props => {
                     <Input
                       prefix={<Icon type="barcode" style={{ color: 'rgba(0,0,0,.25)' }} />}
                       placeholder="spu 条码"
-                      // defaultValue={ props.spuDetails.spuDetailsInfo.spu_name }
                     />,
                   )}
                 </Form.Item>
@@ -97,7 +84,6 @@ const SpuDetailsForm = props => {
                 span={9}
                 offset={2}
                 style={{
-                  // marginLeft: "30px"
                   paddingLeft: '20px',
                 }}
               >
@@ -133,8 +119,6 @@ const SpuDetailsForm = props => {
                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         listType="picture-card"
                         fileList={props.spuDetails.spu_picsFileList}
-                        // onPreview={this.handlePreview}
-                        // onChange={this.handleChange}
                       >
                         {props.spuDetails.spu_picsFileList.length >= 8 ? null : uploadButton}
                       </Upload>

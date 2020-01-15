@@ -84,8 +84,6 @@ export default {
     *getToken({ payload: data }, { call, put }) {
       // 发送请求，获取 token
       let res = yield call(getTokenService);
-      console.log('token: ');
-      console.log(res);
       // 存储 token
       yield put({
         type: '_saveToken',
@@ -95,7 +93,6 @@ export default {
     *initIdData({ payload: req }, { call, put }) {
       // 请求初始的 id 数据
       let res = yield call(initIdDataService);
-      console.log(res);
 
       // 保存 id 数据
       yield put({
@@ -117,9 +114,6 @@ export default {
       });
     },
     *uploadBottomPic({ payload: req }, { call, put }) {
-      console.log('______----------_________');
-      console.log(req.token);
-      console.log(req.data.file);
       let formData = new window.FormData();
       formData.append('file', req.data.file);
       formData.append('token', req.token);
@@ -136,7 +130,6 @@ export default {
       // 请求新建分类
       let res = yield call(createNewCategoryService, params.data);
 
-      console.log(res);
       // 更改 Model 状态
 
       yield put({
@@ -154,13 +147,10 @@ export default {
         type: '_updateGoodsCategory',
         payload: res,
       });
-      console.log(res);
     },
     *reqGoodsSpecs({ payload: user }, { call, put }) {
       // 请求商品规格数据
       let res = yield call(reqGoodsSpecsService, user);
-      console.log('游客站在路灯下');
-      console.log(res);
       // 保存商品规格信息
       yield put({
         type: '_saveGoodsSpecs',
@@ -169,7 +159,6 @@ export default {
     },
     *addSkuGoods({ payload: data }, { call, put }) {
       let res = yield call(addSkuGoodsService, data);
-      console.log(res);
     },
     // 加载父节点数据
     *loadParentNodeData({ payload: param }, { call, put }) {
@@ -195,8 +184,6 @@ export default {
       delete data.key;
       let res = yield call(getNewParentNamesEleService, data);
       res.id = res.parent_id;
-      console.log('嘻嘻哈哈嘻嘻哈哈');
-      console.log(res);
       yield put({
         type: '_updateParentNamesFirstEle',
         payload: {
@@ -240,8 +227,6 @@ export default {
     },
     // 添加新子节点数据结
     *getNewChildNamesEle({ payload: param }, { call, put }) {
-      console.log('()- 分割线 -()');
-      console.log(param);
 
       // 替换 id 元素
       let res = yield call(getNewChildNamesEleService, {
@@ -257,7 +242,6 @@ export default {
         res[index]["parent_id"] = param.parent_id;
       });*/
 
-      console.log(res);
       res.forEach((item, index) => {
         item.prop = item.parent_id;
         item.id = item.child_id;
@@ -288,7 +272,6 @@ export default {
       formData.append('file', param.file.originFileObj);
       formData.append('token', param.token);
       let res = yield call(uploadPicService, formData);
-      console.log(`imgUrl: ${imgUrl}${res.hash}`);
 
       // 保存当前表格上传图片的 url
       yield put({
@@ -343,7 +326,6 @@ export default {
     _saveToken(state, { payload: res }) {
       state.token.token = res.data;
       state.token.prevReqTime = new Date().getTime();
-      console.log(`prevReqTime: ${state.token.prevReqTime}`);
       return { ...state };
     },
     _updateTopPicStatus(state, { payload: params }) {
@@ -367,8 +349,6 @@ export default {
     },
     _updateGoodsCategory(state, { payload: res }) {
       state.goodsCategory = res.data.category_list;
-      console.log('---------++++++++++---------');
-      console.log(res.data.category_list);
 
       return { ...state };
     },
@@ -412,9 +392,6 @@ export default {
     },
     _saveGoodsSpecs(state, { payload: specs }) {
       state.goodsSpecs = specs;
-      console.log('-- ^ 分割线 ^ --');
-      console.log(state.goodsSpecs);
-      console.log('-- ^ 分割线 ^ --');
       return { ...state };
     },
 
@@ -472,7 +449,6 @@ export default {
     },
     // 保存父节点数据
     _saveParentNodeData(state, { payload: param }) {
-      // alert(replace_str);
       replace_str = '';
       // 保存父节点数据
       // 动态向对应数据项中填充数据 ( key )
@@ -575,8 +551,6 @@ export default {
             let obj = null;
             if (state.board_data[i].name === parentInputVal) {
               obj = state.backUp_parentNames.filter((item, index) => {
-                console.log('____+______');
-                console.log(item.parent_id, state.containers[param.key].parentInputId);
                 return item.parent_id === state.containers[param.key].parentInputId;
               })[0];
 
@@ -784,11 +758,7 @@ export default {
       
   
       let tbody = param.table.querySelectorAll('tbody')[0];
-      console.log('*&* 分割线 *&*');
-      console.log(param.table);
       setTimeout(() => {
-        console.log("zero");
-        console.log(state.board_data);
         // 使用定时器的原因是表格生成的时机比获取行为慢，导致获取失败
         // ( 为每个最后含有 file 类型的 input 设置 data-key 属性 )
 
@@ -806,7 +776,6 @@ export default {
         });
       }, 0);
 
-      console.log('[][][][][');
       let arr = [];
       if (state.containers[param.key].real_childNames.length === 0) {
         state.containers[param.key].real_childNames.push(
@@ -858,45 +827,23 @@ export default {
         }
         // 判断原数组中是否有 id 相同的元素
         if (tag) {
-          alert('+');
           state.board_data.splice(arr.indexOf(obj.id), 1, obj);
         } else {
-          alert('-');
 
-          /*
-          *
-          
-            let temp = state.board_data.filter((item, index) => item.temp);
-	      let arr = state.board_data.filter((item, index) => !item.temp);
-          state.board_data.push([...arr, ...temp]);
-         
-          */
 
           if (state.board_data.length === 0) {
             state.board_data.push(obj);
           } else {
             state.board_data.push(obj);
-            console.log('&&&&&&&&&&&&&');
 
             let temp = state.board_data.filter((item, index) => item.temp !== undefined);
             let arr = state.board_data.filter((item, index) => item.temp === undefined);
-            console.log(state.board_data);
-            console.log(state.board_data.length);
             state.board_data = [...arr, ...temp];
-            // state.board_data.push();
 
-            console.log(temp);
-            console.log(arr);
           }
 
-          /*console.log(";;;;;;;;;");
-	        console.log(temp);
-	        console.log(obj);
-	        console.log(state.board_data);*/
         }
 
-        console.log('嘻嘻哈哈嘿嘿');
-        console.log(state.board_data);
 
         state.board_data = state.board_data.filter((item, index) =>
           item.children.every((obj, num) => {
@@ -904,28 +851,15 @@ export default {
           }),
         );
 
-        console.log('^^&&^^||^^&&^^');
-        console.log(state.board_data);
 
         // 根据规格组件选中的规格值动态生成表格
         // 格式化表格数据
 
-        console.log('] 分割线 [');
-        console.log(state.board_data);
-        console.log(state.containers[param.key].parentNames);
-        console.log(state.backUp_parentNames);
 
         if (!state.board_data.some((item, index) => item.name === '价格')) {
-          console.log('获取当前最后一个元素的 id ');
-          console.log(item);
           flag += 1;
 
           let arr = [];
-          /*let temp_obj = {
-            name: '价格',
-            id: flag,
-            temp: true,
-          };*/
           arr.push({
             name: '价格',
             id: flag,
@@ -943,18 +877,11 @@ export default {
           state.board_data.push(...arr);
         }
 
-        console.log('||| 分割线 |||');
-        console.log(state.backUp_childNames);
 
         if (!state.board_data.some((item, index) => item.name === '库存')) {
           flag += 1;
 
           let arr = [];
-          /*let temp_obj = {
-            name: '价格',
-            id: flag,
-            temp: true,
-          };*/
           arr.push({
             name: '库存',
             id: flag,
@@ -981,11 +908,6 @@ export default {
           flag += 1;
 
           let arr = [];
-          /*let temp_obj = {
-            name: '价格',
-            id: flag,
-            temp: true,
-          };*/
           arr.push({
             name: '图片',
             id: flag,
@@ -1009,10 +931,7 @@ export default {
           state.board_data.push(...arr);
         }
 
-        console.log('(( 分割线 ))');
-        console.log(state.board_data);
         let res = formatData(state.board_data);
-        console.log(res);
 
         // 配置显示表格数据需要的数据源
         state.data = res[0];
@@ -1024,20 +943,9 @@ export default {
     _dealCurrentData(state, { payload: param }) {
       const { table } = param;
 
-      console.log(';;;;;;;;;;;;;');
-      console.log(table);
 
       // 获取表头
-      /*let thead = table.querySelectorAll("thead")[0];
-      let thead_ths = thead.querySelectorAll("th");
-      console.log(thead_ths);
-      let real_thead = Array.from(thead_ths).filter((item, index) => !DEFAULT_TABLE_UNIT.includes(item.innerText));
-      console.log("... real_thead ...");
-      real_thead.forEach((item, index) => {
-        console.log(item.innerText);
-      });*/
       let tbody = table.querySelectorAll('tbody')[0];
-      console.log(tbody);
       let trs = tbody.querySelectorAll('tr');
 
       let input_data = [];
@@ -1046,43 +954,21 @@ export default {
         tds = Array.from(tds).filter((item, index) => item.querySelectorAll('input').length !== 0);
         let td = [];
         tds.forEach((item, index) => {
-          console.log('123456789');
-          console.log(item);
 
-          // console.log(item.querySelectorAll("button"));
 
           td.push(item.querySelectorAll('input')[0].value);
         });
         input_data.push(td);
       });
 
-      console.log('*********');
-      console.log(input_data);
-      console.log(trs);
 
       let arr = [];
-      console.log('] 分割线 [');
-      console.log(state.board_data);
       for (let i = 0; i < state.board_data.length - 3; i++) {
         arr.push(state.board_data[i]);
       }
-      console.log(')( )( )(');
 
-      /*sku_list.push({
-        sku_url: "",
-        price: 0,
-        stock: 0,
-        spec_option_id_list: [],
-      });*/
 
-      console.log(arr);
       let sku_list = [];
-      /*      if(arr.length > 1) {
-			  for(let i = 0; i < arr[arr.length - 1].children.length; i++) {
-			  
-			  
-			  }
-			}*/
 
       if (arr.length > 1 && arr.length <= 2) {
         // 两次循环
@@ -1148,20 +1034,11 @@ export default {
         });
       }
 
-      console.log('}_ + + _{');
-      // console.log(temp);
-      console.log(data);
-      console.log(input_data);
-      console.log(sku_list);
-      console.log('}}} 分割线 {{{');
-      console.log(state.currentUploadPics);
 
       for (let i = 0; i < data.length; i++) {
         let temp = state.currentUploadPics.filter((item, index) => item.index === i)[0];
         data[i].sku_url = temp === undefined ? '' : temp.url;
       }
-      console.log('最终数据');
-      console.log(data);
 
       state.sku_list = data;
 
@@ -1179,8 +1056,6 @@ export default {
 
       // 根据删除小标签动态删除表格
       // 格式化表格数据
-      console.log("呼啦啦");
-      console.log(state.board_data);
       let res = formatData(state.board_data);
 
       // 配置显示表格数据需要的数据源
@@ -1195,30 +1070,19 @@ export default {
       return { ...state };
     },
     _getCurrentUploadKey(state, { payload: param }) {
-      console.log('_getCurrentUploadKey ...');
-      console.log(param.key);
       state.currentUploadComponentIndex = param.key;
       return { ...state };
     },
     _saveCurrentTabUploadUrl(state, { payload: imgUrl }) {
-      console.log('][=');
-      console.log(state.currentUploadPics);
       state.currentUploadComponentUrl = imgUrl;
-      console.log('*_ 分割线 _*');
-      console.log(`currentUploadComponentIndex: ${state.currentUploadComponentIndex}`);
-      console.log(`currentUploadComponentUrl: ${state.currentUploadComponentUrl}`);
       if (state.currentUploadPics.length === 0) {
         state.currentUploadPics.push({
           index: state.currentUploadComponentIndex,
           url: state.currentUploadComponentUrl,
         });
       } else {
-        // console.log("_+_");
-        // console.log(state.currentUploadPics[i].index, state.currentUploadComponentIndex);
         for (let i = 0; i < state.currentUploadPics.length; i++) {
-          console.log(state.currentUploadPics[i].index, state.currentUploadComponentIndex);
           if (state.currentUploadPics[i].index === state.currentUploadComponentIndex) {
-            console.log('okoko');
             state.currentUploadPics[i].url = state.currentUploadComponentUrl;
           } else {
             state.currentUploadPics.push({
@@ -1228,8 +1092,6 @@ export default {
           }
         }
       }
-      console.log('图片');
-      console.log(state.currentUploadPics);
       return { ...state };
     },
   },
@@ -1297,7 +1159,6 @@ const changeChildHoverInputBoardStyle = (str, tag, rotate, index, state) => {
 // 封装 React 表单输入内容的功能函数
 const bindHoverInput = (state, param, config) => {
   // 将父节点的 input 输入框与 modal 中的数据进行绑定
-  // state.containers[param.key].parentHoverInputVal = param.value;
   state.containers[param.key][config.hoverInputVal] = param.value;
 
   // 判断当前的输入状态是否为删除
@@ -1394,235 +1255,12 @@ function formatData(data) {
     arr.push(data[i].children);
   }
 
-  console.warn('}{}{}{}{}{');
-  console.log(arr);
   let tableData = []; // 表格数据
   let count = 0; // 每行表格必须的 key 值
 
   // 格式化表格数据
-  /*  switch (arr.length - 3) {
-	  case 1: // 仅有一种规格
-		alert('A');
-  
-		arr[0].forEach((item, index) => {
-		  // 遍历第一个规格值的集合 -> 创建数据并添加
-		  count += 1;
-		  tableData.push({
-			[item.prop]: item.name,
-			key: count,
-		  });
-		});
-		break;
-  
-	  case 2: // 有两种规格
-		alert('B');
-  
-		arr[0].forEach((item, index) => {
-		  // 遍历第一个规格值的集合 -> 创建数据并添加
-		  if (arr[1].length !== 0) {
-			// 第二种规格值的集合有元素
-			arr[1].forEach((ele, num) => {
-			  // // 遍历第二个规格值的集合 -> 创建数据并添加
-			  count += 1;
-			  tableData.push({
-				[item.prop]: item.name,
-				[ele.prop]: ele.name,
-				key: count,
-			  });
-			});
-		  } else {
-			// 第二种规格值的集合无元素 ( 直接添加第一种规格模型的表格数据 )
-			count += 1;
-			tableData.push({
-			  [item.prop]: item.name,
-			  key: count,
-			});
-		  }
-		});
-  
-		break;
-	  case 3: // 有三种规格
-		alert('C');
-  
-		if (arr[0].length !== 0) {
-		  // 第一个规格值集合有元素
-		  arr[0].forEach((item, index) => {
-			// 遍历第一个规格值的集合 -> 创建数据并添加
-  
-			if (arr[1].length !== 0) {
-			  // 第二个规格值集合有元素
-			  arr[1].forEach((ele, num) => {
-				// 遍历第二个规格值的集合 -> 创建数据并添加
-				if (arr[2].length !== 0) {
-				  // 第三个规格值集合有元素
-				  arr[2].forEach((object, id) => {
-					// 遍历第三个规格值的集合 -> 创建数据并添加
-					count += 1;
-					tableData.push({
-					  [item.prop]: item.name,
-					  [ele.prop]: ele.name,
-					  [object.prop]: object.name,
-					  key: count,
-					});
-				  });
-				} else {
-				  // 第三个规格值集合无元素 ( 直接添加 第一种/第二种 规格模型的表格数据 )
-				  count += 1;
-				  tableData.push({
-					[item.prop]: item.name,
-					[ele.prop]: ele.name,
-					key: count,
-				  });
-				}
-			  });
-			} else {
-			  // 第二个规格值集合无元素
-			  /!*count += 1;
-			  tableData.push({
-				[item.prop]: item.name,
-				key: count,
-			  });*!/
-			  if (arr[2].length !== 0) {
-				// 第三个规格值集合有元素
-				arr[2].forEach((object, id) => {
-				  // 遍历第三个规格值的集合 -> 创建数据并添加
-				  count += 1;
-				  tableData.push({
-					[item.prop]: item.name,
-					[object.prop]: object.name,
-					key: count,
-				  });
-				});
-			  } else {
-				// 第三个规格值集合无元素 ( 直接添加 第一种/第二种 规格模型的表格数据 )
-				count += 1;
-				tableData.push({
-				  [item.prop]: item.name,
-				  key: count,
-				});
-			  }
-			}
-		  });
-		} else {
-		  // 第一个规格值集合无元素
-		  if (arr[1].length !== 0) {
-			// 第二个规格值集合有元素
-			arr[1].forEach((ele, num) => {
-			  // 遍历第二个规格值的集合 -> 创建数据并添加
-			  if (arr[2].length !== 0) {
-				// 第三个规格值集合有元素
-				arr[2].forEach((object, id) => {
-				  // 遍历第三个规格值的集合 -> 创建数据并添加
-				  count += 1;
-				  tableData.push({
-					[ele.prop]: ele.name,
-					[object.prop]: object.name,
-					key: count,
-				  });
-				});
-			  } else {
-				// 第三个规格值集合无元素
-				count += 1;
-				tableData.push({
-				  [ele.prop]: ele.name,
-				  key: count,
-				});
-			  }
-			});
-		  } else {
-			// 第二个规格值集合无元素
-			if (arr[2].length !== 0) {
-			  // 第三个规格值集合有元素 ( 直接添加 第一种 规格模型的表格数据 )
-			  arr[2].forEach((object, id) => {
-				count += 1;
-				tableData.push({
-				  [object.prop]: object.name,
-				  key: count,
-				});
-			  });
-			} else {
-			  // 第三个规格值集合无元素
-			  count += 1;
-			  tableData.push({
-				key: count,
-			  });
-			}
-		  }
-		}
-  
-		break;
-	}*/
-  console.log('%&%&%&%&%&%');
-  console.log(arr[0]);
-
-  // ...asdas
-  /*  for(let i = 0; i < arr.length - 3; i++) {
-	  
-	  
-	  console.log("[]{}【】");
-	  console.log(arr);
-	  // if(arr.length - 3 <= 3) {
-		// alert("1");
-		console.log(arr[i]);
-		for(let j = 0; j < arr[i].length; j++) {
-		 /!* tableData.push({
-			key: count,
-			[arr[i][j].prop]: arr[i][j].name
-		  });*!/
-		  count += 1;
-		  tableData.push({
-			key: count,
-			[arr[i][j].prop]: arr[i][j].name
-		  });
-		  console.log("sudo");
-		  console.log([arr[i][j].prop], arr[i][j].name);
-		}
-	  /!*}else {
-	  
-	  }*!/
-	 /!* tableData.push({
-		key: count
-	  });*!/
-	  /!*for(let j = 0; j < arr[i].length; j++) {
-		count += 1;
-		tableData[i][arr[i][j].prop] = arr[i][j].name;
-		tableData[i].key = count;
-	  }*!/
-	}*/
-
-  // yes
-  /*  for(let j = 0; j < arr[0].length; j++) {
-	  /!* tableData.push({
-		 key: count,
-		 [arr[i][j].prop]: arr[i][j].name
-	   });*!/
-	  count += 1;
-	  tableData.push({
-		key: count,
-		[arr[0][j].prop]: arr[0][j].name
-	  });
-	}
-	console.log("|||");
-	console.log(arr.length - 3, arr.length);
-	let surplus = arr.slice(1, arr.length);
-	console.log("surplus ...");
-	console.log(tableData);
-	console.log(surplus);
-	
-	tableData.forEach((item, index) => {
-	  for(let i = 0; i < surplus.length; i++) {
-		for(let j = 0; j < surplus[i].length; j++) {
-		  item[surplus[i][j].prop] = surplus[i][j].name
-		}
-		
-	  }
-	});*/
-
   let surplus = arr.slice(0, arr.length - 3);
 
-  console.log('asdasd');
-  console.log(surplus[0]);
-  console.log(arr[0]);
   if (arr[0].length !== 0) {
     // 第一个规格值集合有元素
     arr[0].forEach((item, index) => {
@@ -1750,73 +1388,32 @@ function formatData(data) {
     }
   }
 
-  console.log('&&&********&&&&&&&&&&&&&&&&&***********');
-  console.log(tableData);
 
   // 格式化 column 数据
   let columns = [];
 
-  console.log('columns');
-  console.log(data);
   let len = data.length;
   for (let i = 0; i < len; i++) {
     if (data[i] !== undefined) {
       if (data[i].children.length === 0) {
       } else {
-        alert('Go');
-        console.log('???????????');
-        console.log(data[i]);
         let obj = null;
-        /*if(data[i].temp !== undefined) {
-          obj = {
-            title: data[i].name,
-            dataIndex: data[i].children[0].prop,
-            render: (text, record) => {
-              
-              console.log(")))))))))))))))))))))))))))))))))))");
-              console.log(text);
-              console.log(record);
-  
-              return data[i].temp === "price" ? (
-                  <Input prefix="￥" suffix="RMB" style={{ width: "40%" }} />
-              ) : data[i].temp === "repertory" ? (
-                  <Input prefix={<Icon type="inbox" style={{color: 'rgba(0,0,0,.25)'}}/>}
-                         style={{ width: "40%" }}
-                  />
-              ) : data[i].temp === "picture" ? (
-                  <Upload>
-                    <Button>
-                      <Icon type="upload"/> Click to Upload
-                    </Button>
-                  </Upload>
-              ) : null;
-            },
-          };
-        }else {*/
         obj = {
           title: data[i].name,
           dataIndex: data[i].children[0].prop,
           render: (text, record) => {
-            console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$');
-            console.log(text);
-            console.log(record);
             return text;
           },
         };
         // }
 
-        console.log('ooooooooooooooooooooooooo');
-        console.log(data);
         if (i === 0) {
-          alert('start ...');
           // 为第一个元素设置 render
           let len = data.length - 3;
 
-          alert(`data length: ${len}`);
           if (len === 2) {
             if (data[1].children.length > 1) {
               let arr = [];
-              alert('start .../\\/');
               for (let j = 0; j < data[0].children.length; j++) {
                 arr.push(j * data[len - 1].children.length);
               }
@@ -1836,12 +1433,8 @@ function formatData(data) {
               };
             }
           } else if (len === 3) {
-            alert('加油');
-            console.warn('|||');
-            console.log(data);
             if (data[2].children.length > 1) {
               let arr = [];
-              alert('哈哈');
               for (let j = 0; j < data[0].children.length; j++) {
                 arr.push(
                   j *
@@ -1872,8 +1465,6 @@ function formatData(data) {
           if (data.length - 3 === 3) {
             if (data[2].children.length > 1) {
               let arr = [];
-              console.warn('|-|');
-              console.log(data);
               for (let j = 0; j < data[0].children.length * data[1].children.length; j++) {
                 arr.push(j * data[data.length - (1 + 3)].children.length);
               }

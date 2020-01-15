@@ -18,7 +18,6 @@ export default {
     *initWelcomeData({}, { call, put }) {
       // 初始化欢迎页的页面数据
       const res = yield call(initWelcomeData);
-      alert(1);
       yield put({
         type: 'defaultWelcomeData',
         payload: res,
@@ -77,10 +76,6 @@ export default {
     // 返回异步获取到的欢迎页的初始化数据
     defaultWelcomeData(state, { payload: res }) {
       state.list = res;
-      console.log('---');
-      alert(1);
-      console.log(state.list);
-      // console.log(state.list.app_content_func.ctlGoods);
       return { ...state };
     },
   },

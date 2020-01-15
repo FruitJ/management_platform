@@ -27,135 +27,7 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-/*const options = [
-	{
-		value: "未分类",
-		label: "未分类",
-	},
-	{
-		value: 'zhejiang',
-		label: 'Zhejiang',
-		children: [
-			{
-				value: 'hangzhou',
-				label: 'Hangzhou',
-				children: [
-					{
-						value: 'xihu',
-						label: 'West Lake',
-					},
-				],
-			},
-		],
-	},
-	{
-		value: 'jiangsu',
-		label: 'Jiangsu',
-		children: [
-			{
-				value: 'nanjing',
-				label: 'Nanjing',
-				children: [
-					{
-						value: 'zhonghuamen',
-						label: 'Zhong Hua Men',
-					},
-				],
-			},
-		],
-	},
-];*/
-
-/*const options = [
-	{
-		children: [
-			{
-				children: [
-					{
-						children: [
-							{
-								children: [
-									{
-										children: null,
-										key: 12,
-										value: "低度酒",
-										label: "低度酒"
-									},
-									{
-										children: null,
-										key: 13,
-										value: "高度酒",
-										label: "高度酒"
-									}
-								],
-								key: 8,
-								value: "白酒",
-								label: "白酒"
-							},
-							{
-								children: null,
-								key: 10,
-								value: "啤酒",
-								label: "啤酒"
-							}
-						],
-						key: 5,
-						value: "酒",
-						label: "酒"
-					},
-					{
-						children: null,
-						key: 6,
-						value: "饮用水",
-						label: "饮用水"
-					},
-					{
-						children: [
-							{
-								children: null,
-								key: 11,
-								value: "可乐",
-								label: "可乐"
-							}
-						],
-						key: 7,
-						value: "饮料",
-						label: "饮料"
-					}
-				],
-				key: 4,
-				value: "酒水饮料",
-				label: "酒水饮料"
-			}
-		],
-		key: 1,
-		value: "食品类",
-		label: "食品类"
-	},
-	{
-		children: null,
-		key: 2,
-		value: "日用品类",
-		label: "日用品类"
-	},
-	{
-		children: [
-			{
-				children: null,
-				key: 9,
-				value: "手机",
-				label: "手机"
-			}
-		],
-		key: 3,
-		value: "家电 / 数码 / 手机",
-		label: "家电 / 数码 / 手机"
-	}
-];*/
-// const AddSkuItemComponent = props => {
-
 const SkuClassesForm = props => {
-  console.log(props);
 
   return (
     <div
@@ -198,7 +70,6 @@ const SkuForm = props => {
     ev.preventDefault();
     props.form.validateFields((err, values) => {
       if (!err) {
-        console.log(props.addSku.topFileList);
         const { topFileList } = props.addSku;
         let top_urls = [];
         topFileList.forEach((item, index) => {
@@ -209,9 +80,6 @@ const SkuForm = props => {
         bottomFileList.forEach((item, index) => {
           bottom_urls.push(item.url);
         });
-        console.log(top_urls);
-        console.log('获取 sku_list ...');
-        console.log(props.addSku.sku_list);
         // 提交页面数据
         let data = {
           merchant_id: 1,
@@ -221,25 +89,6 @@ const SkuForm = props => {
           bottom_urls: bottom_urls,
           sku_list: [],
         };
-        // 获取表单数据
-
-        // 获取上传图片数据
-        // const { getGoodsSpecsData } = require('../../../components/DynamicTableGenerator/utils');
-        // 获取商品规格数据
-        // console.log(getGoodsSpecsData());
-
-        // let specs = getGoodsSpecsData();
-        /*for (let i = 0; i < specs.length; i++) {
-          data.sku_list.push({
-            sku_url: specs[i].goods_pics,
-            price: specs[i].goods_price,
-            stock: Number(specs[i].goods_stock),
-            spec_option_id_list: [2, 3],
-          });
-        }*/
-        console.log(JSON.stringify(data));
-        console.log('Received values of form: ', values);
-        // 提交数据
 
         props.onSubmitSkuData(data);
       }
@@ -274,68 +123,9 @@ const SkuForm = props => {
         layout="vertical"
         onSubmit={handleSubmit}
         labelAlign="right"
-        // layout={}
       >
         <Row>
           {/* 商品编码和商品条码 */}
-          {/*<Col span={12}
-					     style={{
-						     textAlign: "center",
-					     }}
-					>
-						<Form.Item validateStatus={goodsCodeError ? 'error' : ''}
-						           help={goodsCodeError || ''}
-						           label = "商品编码"
-						>
-							{getFieldDecorator('goodsCode', {
-								rules: [{ required: false, message: 'Please input your username!' }],
-							})(
-								<Input
-									prefix={
-										<Icon type="number"
-										      style={{ color: 'rgba(0,0,0,.25)' }}
-										/>}
-									placeholder="商品编码"
-									style={{
-										width: "300px"
-									}}
-								/>,
-							)}
-						</Form.Item>
-						<br />
-						<span style={{
-							marginLeft: "70px",
-							fontSize: "12px",
-							color: "#969799"
-						}}>用于商家内部管理使用，具体编码规则需要商家自定义</span>
-					</Col>
-					<Col span={12} style={{
-						textAlign: "center"
-					}}>
-						<Form.Item validateStatus={goodsBarCodeError ? 'error' : ''}
-						           help={goodsBarCodeError || ''}
-						           label = "商品条码"
-						>
-							{getFieldDecorator('goodsBarCode', {
-								rules: [{ required: false, message: 'Please input your Password!' }],
-							})(
-								<Input
-									prefix={<Icon type="barcode" style={{ color: 'rgba(0,0,0,.25)' }} />}
-									type="password"
-									placeholder="商品条码"
-									style={{
-										width: "300px"
-									}}
-								/>,
-							)}
-						</Form.Item>
-						<br />
-						<span style={{
-							marginLeft: "60px",
-							fontSize: "12px",
-							color: "#969799"
-						}}>输入标准商品条码，系统会自动匹配商品信息并填充</span>
-					</Col>*/}
           <Col
             span={6}
             offset={2}
@@ -413,27 +203,6 @@ const SkuForm = props => {
                   用于店铺内部经营管理与财务利润核算
                 </span>
               </Col>
-              {/*<Col span={4} style={{
-								marginLeft: "-25px"
-							}}>
-								<AddSkuClassesForm onCancel= { props.onCancel }
-								                   onSubmit = { props.onSubmit }
-								                   onShowSkuClassModal = { props.onShowSkuClassModal }
-								                   isShowSkuClassModal = { props.isShowSkuClassModal }
-								                   onChangeNewInputVal = { props.onChangeNewInputVal }
-								                   addSku = { props.addSku }
-								/>
-								
-								<Button type="default"
-								        style={{
-									        marginTop: "3px",
-								        }}
-								        // onClick={ props.onShowSkuClassModal }
-								>
-									新建分类
-								</Button>
-								
-							</Col>*/}
             </Row>
           </Col>
           <Col
@@ -575,15 +344,9 @@ const SkuForm = props => {
           </Col>
         </Row>
       </Form>
-      {/*      <GoodsSpecsGenerator
-        addSku={props.addSku}
-        style={{
-          paddingBottom: '50px',
-        }}
-      />*/}
 
       <div>
-        {/*容器组件 ( 动态生成 )*/}
+        {/*商品规格组件 ( 动态生成 )*/}
         {props.addSku.containers.map((item, index) => (
           <InputBoard
             key={index}
@@ -636,7 +399,6 @@ const AddSkuItem = props => {
   // 获取 token
   useEffect(() => {
     // 获取路由中的参数
-    console.log(props);
 
     // 获取上传图片的 token
     // 判断当前 token 是否已经过期
@@ -652,11 +414,6 @@ const AddSkuItem = props => {
     props.onInitIdData();
   }, []);
 
-  const handleCancelSkuForm = () => {};
-
-  const handleSubmitSkuForm = () => {};
-
-  const handleShowSkuClassModal = () => {};
 
   return (
     <div>
@@ -671,12 +428,10 @@ const AddSkuItem = props => {
       />
 
       <Row>
-        {/*<Divider />*/}
         <Col
           span={24}
           style={{
             marginTop: '24px',
-            // height: "50px",
             backgroundColor: '#FFF',
           }}
         >

@@ -275,51 +275,20 @@ let num = childDataSource.length;
 module.exports = {
   ['POST /api/getToken'](req, res) {
     // 测试接收的参数
-    console.log(req.body);
     // 返回 token 值
     return res.status(200).json({ token: 'abcdefg123hijklmn456' });
   },
-  /*['POST /api/uploadTopPicService'](req, res) {
-	
-		// 返回图片地址
-		return res.status(200).json({
-			uid: new Date().getTime(),
-			name: "test.png",
-			status: 'done',
-			url: "https://cdn.pixabay.com/photo/2019/12/05/00/36/leaves-4673997__340.jpg"
-		});
-	},*/
 
-  /*['POST /api/uploadBottomPicService'](req, res) {
-	
-		// 返回图片地址
-		return res.status(200).json({
-			uid: new Date().getTime(),
-			name: "test.png",
-			status: 'done',
-			url: "https://cdn.pixabay.com/photo/2019/12/05/00/36/leaves-4673997__340.jpg"
-		});
-	},*/
 
   ['POST /api/initIdDataService'](req, res) {
     return res.status(200).json(idData);
   },
 
-  /*['POST /api/createNewCategoryService'](req, res) {
-		let temp = {
-			name: req.body.category,
-			id: 3,
-		};
-		category.push(temp);
-		return res.status(200).json(category);
-	},*/
   
   ['POST /api/loadParentNodeDataService'](req, res) {
     res.status(200).json(dataSource);
   },
   ['POST /api/getNewParentNamesEleService'](req, res) {
-    console.log('嘻嘻嘻嘻嘻嘻');
-    console.log(req.body);
     
     if (dataSource.some((item, index) => item.parent_name !== req.body.parent_name)) {
       count += 1;
@@ -335,29 +304,15 @@ module.exports = {
     }
   },
   ['POST /api/loadChildNodeDataService'](req, res) {
-    console.log('啦啦啦');
-    console.log(req.body);
     
-    /*childDataSource.forEach((item, index) => {
-      if (item.parent_id === Number(req.body.parent_id)) {
-        item.prop = req.body.prop;
-      }
-    });*/
     
-    console.log("--------------------");
-    console.log(req.body.parent_id);
-    console.log(childDataSource);
     let data = childDataSource.filter(
         (item, index) => item.parent_id === Number(req.body.parent_id),
     );
     
-    console.log("---");
-    console.log(data);
     res.status(200).json(data);
   },
   ['POST /api/getNewChildNamesEleService'](req, res) {
-    console.log('/api/getNewChildNamesEleService');
-    console.log(req.body);
     
     let { newElements, prop } = req.body;
     newElements = newElements.map((item, index) => {
@@ -372,13 +327,6 @@ module.exports = {
       return obj;
     });
     childDataSource.push(...newElements);
-    /*newElements.forEach((item, index) => {
-      delete item.child_name;
-      delete item.parent_id;
-    });*/
-    console.log('呵呵');
-    console.log(newElements);
-    // console.log(Array.from(req.body));
     res.status(200).json(newElements);
   },
   

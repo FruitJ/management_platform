@@ -45,10 +45,6 @@ const InputBoard = props => {
     props.onAddChildNodeClick(props.dataKey, id, prop);
   };
 
-  const handleChildInputClick = () => {
-    // 面板切换 ( 状态的 )
-    // props.onChildInputClick(props.dataKey);
-  };
 
   const handleSwitchChildHoverBoardStatus = () => {
     // 切换子节点的悬浮选值面板的状态
